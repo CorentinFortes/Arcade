@@ -4,36 +4,28 @@
 ** File description:
 ** func.cpp
 */
-
-#include <iostream>
-#include "../IDisplay.hpp"
-
-class Display : public IDisplay
-{
-    public:
-    virtual void printHello(void);
-    virtual void createMenu(void);
-};
+#include "Display.hpp"
 
 void Display::printHello(void)
 {
     std::cout << "sfml world" << std::endl;
 }
 
-void Display::createMenu(void)
+std::string Display::createMenu(void)
 {
     sf::RenderWindow window(sf::VideoMode(800, 700), "SFML menu");
-    while (window.isOpen())
-    {
+    while (window.isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
                 window.close();
+                return "close";
+            }
         }
 
         window.display();
     }
+    return "close";
 }
 
 extern "C" IDisplay* create(void)

@@ -14,6 +14,6 @@ class IDisplay
 {
     public:
     virtual ~IDisplay() = default;
-    virtual void printHello(void) =0;
-    virtual void createMenu() =0;
+    virtual void printHello(void) = 0;
+    virtual std::string createMenu() = 0;
 };

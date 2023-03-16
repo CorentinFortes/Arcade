@@ -23,32 +23,13 @@ void *openlib(std::string path)
 
 int main(int ac, char **av)
 {
-    void *handle = openlib("./lib/arcade_ncurses.so");
+    void *handle = openlib(av[1]);
     if (!handle)
-        return 1;
+        return 84;
     creator create = (creator) dlsym(handle, "create");
-    IDisplay *func = create();
-    if (!func) {
-        std::cerr << "Cannot load symbol 'printHello': " << dlerror() << '\n';
-        dlclose(handle);
-        return 1;
-    }
-    func->printHello();
-    handle = openlib("./lib/arcade_sfml.so");
-    if (!handle) {
-        std::cerr << "Cannot open library: " << dlerror() << '\n';
-        return 1;
-    }
-    create = (creator) dlsym(handle, "create");
-    func = create();
-    if (!func) {
-        std::cerr << "Cannot load symbol 'printHello': " << dlerror() << '\n';
-        dlclose(handle);
-        return 1;
-    }
-    func->printHello();
-    func->createMenu();
-    delete func;
+    IDisplay *menu = create();
+    std::string buf = menu->createMenu();
+    delete menu;
     dlclose(handle);
     return 0;
 }

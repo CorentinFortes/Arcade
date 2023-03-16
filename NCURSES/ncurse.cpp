@@ -5,28 +5,19 @@
 ** func.cpp
 */
 
-#include <iostream>
-#include <ncurses.h>
-#include "../IDisplay.hpp"
-
-class Display : public IDisplay
-{
-    public:
-    virtual void printHello(void);
-    virtual void createMenu();
-};
+#include "ncurse.hpp"
 
 void Display::printHello(void)
 {
     std::cout << "ncurse world" << std::endl;
 }
 
-void Display::createMenu()
+std::string Display::createMenu(void)
 {
-    ;
+    return "close";
 }
 
-extern "C" IDisplay* create()
+extern "C" IDisplay* create(void)
 {
     return new Display();
 }
