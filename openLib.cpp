@@ -7,42 +7,48 @@
 
 #include <iostream>
 #include <dlfcn.h>
+#include "IDisplay.hpp"
 
-// void *openlib(char *path)
-// {
-//     void *handle = dlopen(path, RTLD_LAZY);
-//     if (!handle) {
-//         std::cerr << "Cannot open library: " << dlerror() << '\n';
-//         return NULL;
-//     }
-//     return handle;
-// }
+typedef IDisplay* (*creator) ();
+
+void *openlib(std::string path)
+{
+    void *handle = dlopen(path.c_str(), RTLD_LAZY);
+    if (!handle) {
+        std::cerr << "Cannot open library: " << dlerror() << '\n';
+        return NULL;
+    }
+    return handle;
+}
 
 int main(int ac, char **av)
 {
-    void *handle = dlopen("./libr.so", RTLD_LAZY);
-    if (!handle) {
-        std::cerr << "Cannot open library: " << dlerror() << '\n';
+    void *handle = openlib("./lib/arcade_ncurses.so");
+    if (!handle)
         return 1;
-    }
-    void (*func)() = (void (*)()) dlsym(handle, "printHello");
+    creator create = (creator) dlsym(handle, "create");
+    IDisplay *func = create();
     if (!func) {
         std::cerr << "Cannot load symbol 'printHello': " << dlerror() << '\n';
         dlclose(handle);
         return 1;
     }
-    func();
-    handle = dlopen("./libr2.so", RTLD_LAZY);
+    func->printHello();
+    handle = openlib("./lib/arcade_sfml.so");
     if (!handle) {
         std::cerr << "Cannot open library: " << dlerror() << '\n';
         return 1;
     }
-    func = (void (*)()) dlsym(handle, "printHello");
+    create = (creator) dlsym(handle, "create");
+    func = create();
     if (!func) {
         std::cerr << "Cannot load symbol 'printHello': " << dlerror() << '\n';
         dlclose(handle);
         return 1;
     }
-    func();
+    func->printHello();
+    func->createMenu();
+    delete func;
+    dlclose(handle);
     return 0;
 }
