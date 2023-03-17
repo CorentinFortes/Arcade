@@ -13,6 +13,5 @@ class Display : public IDisplay
     public:
     Display(){};
     ~Display(){};
-    void printHello(void);
     std::string createMenu();
 };

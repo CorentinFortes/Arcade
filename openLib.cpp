@@ -29,7 +29,6 @@ int main(int ac, char **av)
     creator create = (creator) dlsym(handle, "create");
     IDisplay *menu = create();
     std::string buf = menu->createMenu();
-    std::cout << buf << std::endl;
     std::string game = buf.substr(0, buf.find(" "));
     buf.erase(0, buf.find(" ") + 1);
     std::string lib = buf.substr(0, buf.find(" "));

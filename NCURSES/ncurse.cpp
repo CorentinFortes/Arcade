@@ -7,11 +7,6 @@
 
 #include "ncurse.hpp"
 
-void Display::printHello(void)
-{
-    std::cout << "ncurse world" << std::endl;
-}
-
 void Display::printMenu(std::vector <std::string> menu, std::vector <std::string> games)
 {
     mvprintw(0, 0, "Choose a lib :");
@@ -92,7 +87,6 @@ std::string Display::createMenu(void)
             if (selectlib != -1 && selectgame != -1) {
                 retour += printUser();
                 endwin();
-                std::cout << games[selectgame - 6] << " " << menu[selectlib - 1] << " " << retour << std::endl;
                 return (games[selectgame - 6] + " " + menu[selectlib - 1] + " " + retour);
             }
         }

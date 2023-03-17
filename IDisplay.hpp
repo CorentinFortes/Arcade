@@ -5,15 +5,19 @@
 ** ITest.hpp
 */
 #pragma once
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
+#include <iostream>
+#include <string>
+#include <map>
+
 
 class IDisplay
 {
     public:
     ~IDisplay() = default;
-    virtual void printHello(void) = 0;
-    virtual std::string createMenu() = 0;
+    virtual void openWindow() = 0;
+    virtual std::string createText(std::string name, int x, int y) = 0;
+    virtual void drawText(std::string key, int x, int y) = 0;
+    virtual char event() = 0;
+    virtual void changeColor(std::string key, int x, int y, std::string color) = 0;
+    virtual void modifieText(std::string key, int x, int y, std::string newStr) = 0;
 };
