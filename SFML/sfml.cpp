@@ -7,11 +7,6 @@
 #include "Display.hpp"
 #include "Text.hpp"
 
-void Display::printHello(void)
-{
-    std::cout << "sfml world" << std::endl;
-}
-
 std::string Display::createMenu(void)
 {
     sf::RenderWindow window(sf::VideoMode(800, 700), "SFML menu");
@@ -28,7 +23,7 @@ std::string Display::createMenu(void)
     Text name("", 20, 550);
     int select = 0, enter = 0, pos = 50;
     std::string path;
-    while (window.isOpen()) {
+    while (1) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {

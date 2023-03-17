@@ -7,11 +7,6 @@
 
 #include "ncurse.hpp"
 
-void Display::printHello(void)
-{
-    std::cout << "ncurse world" << std::endl;
-}
-
 void Display::printMenu(std::vector <std::string> menu, std::vector <std::string> games)
 {
     mvprintw(0, 0, "Choose a lib :");
