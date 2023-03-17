@@ -11,7 +11,7 @@ OBJ = $(SRC:.cpp=.o)
 $(NAME) :
 		 g++ -shared -fPIC ./NCURSES/ncurse.cpp -o ./lib/arcade_ncurses.so
 		 g++ -shared -fPIC ./SFML/sfml.cpp -o ./lib/arcade_sfml.so
-		 g++ openLib.cpp -ldl -o arcade -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio
+		 g++ openLib.cpp -ldl -o arcade -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio -lncurses
 
 all : $(NAME)
 

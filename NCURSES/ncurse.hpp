@@ -1,10 +1,18 @@
 #include <iostream>
-#include <ncurses.h>
+#include <curses.h>
+#include <vector>
+#include <string>
 #include "../IDisplay.hpp"
 
 class Display : public IDisplay
 {
+    private:
+    void printMenu(std::vector <std::string> menu, std::vector <std::string> games);
+    std::string printUser();
+
     public:
-    virtual void printHello(void);
-    virtual std::string createMenu();
+    Display(){};
+    ~Display(){};
+    void printHello(void);
+    std::string createMenu();
 };
