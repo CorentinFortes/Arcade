@@ -1,0 +1,7 @@
+openwindow -> lib
+display -> lib 
+applique jeu -> jeu // avec un char ** par exemple
+display jeu -> lib
+close window -> lib
+
+

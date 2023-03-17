@@ -55,17 +55,13 @@ std::string Display::printUser()
 
 std::string Display::createMenu(void)
 {
-    WINDOW *window = initscr();
-    keypad(window, TRUE);
-    noecho();
-    start_color();
+    openwindow();
     std::string retour;
     std::vector <std::string> menu = {"./lib/arcade_ncurses.so", "./lib/arcade_sdl.so", "./lib/arcade_sfml.so"};
     std::vector <std::string> games = {"./lib/arcade_centipede.so", "./lib/arcade_menu.so", "./lib/nibbler.so",
     "./lib/arcade_pacman.so", "./lib/arcade_qix.so", "./lib/arcade_snake.so" , "./lib/arcade_solarfox.so"};
-    curs_set(0);
     int selectgame = -1, selectlib = -1, surligne = 1;
-    init_pair(1, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(1, COLOR_BLACK, COLOR_YELLOW); 
     init_pair(2, COLOR_BLACK, COLOR_WHITE);
     while (1) {
         printMenu(menu, games);
@@ -92,7 +88,6 @@ std::string Display::createMenu(void)
             if (selectlib != -1 && selectgame != -1) {
                 retour += printUser();
                 endwin();
-                std::cout << games[selectgame - 6] << " " << menu[selectlib - 1] << " " << retour << std::endl;
                 return (games[selectgame - 6] + " " + menu[selectlib - 1] + " " + retour);
             }
         }
@@ -112,6 +107,15 @@ std::string Display::createMenu(void)
     }
     endwin();
     return "close";
+}
+
+void Display::openwindow()
+{
+    window = initscr();
+    keypad(window, TRUE);
+    noecho();
+    start_color();
+    curs_set(0);
 }
 
 extern "C" IDisplay* create(void)
