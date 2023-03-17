@@ -4,7 +4,7 @@
 ** File description:
 ** ITest.hpp
 */
-
+#pragma once
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -13,7 +13,7 @@
 class IDisplay
 {
     public:
-    virtual ~IDisplay() = default;
+    ~IDisplay() = default;
     virtual void printHello(void) = 0;
     virtual std::string createMenu() = 0;
 };
