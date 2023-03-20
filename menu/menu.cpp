@@ -38,22 +38,22 @@ menu::menu(IDisplay *menu)
     "./lib/arcade_pacman.so", "./lib/arcade_qix.so", "./lib/arcade_snake.so" , "./lib/arcade_solarfox.so"};
     int selectgame = -1, selectlib = -1, surligne = 1;
     menu->openWindow();
+    menu->createText("Choose a lib :", "Choose a lib :", 0, 0);
+    menu->createText(libs[0], libs[0], 0, 1);
+    menu->createText(libs[1], libs[1], 0, 2);
+    menu->createText(libs[2], libs[2], 0, 3);
+    menu->createText("\n 1", "\n", 0, 4);
+    menu->createText("Choose a game :", "Choose a game :", 0, 5);
+    menu->createText(games[0], games[0], 0, 6);
+    menu->createText(games[1], games[1], 0, 7);
+    menu->createText(games[2], games[2], 0, 8);
+    menu->createText(games[3], games[3], 0, 9);
+    menu->createText(games[4], games[4], 0, 10);
+    menu->createText(games[5], games[5], 0, 11);
+    menu->createText(games[6], games[6], 0, 12);
+    menu->createText("\n 2", "\n", 0, 13);
+    menu->createText("User : ", "User : ", 0, 14);
     while (1) {
-        menu->createText("Choose a lib :", "Choose a lib :", 0, 0);
-        menu->createText(libs[0], libs[0], 0, 1);
-        menu->createText(libs[1], libs[1], 0, 2);
-        menu->createText(libs[2], libs[2], 0, 3);
-        menu->createText("\n 1", "\n", 0, 4);
-        menu->createText("Choose a game :", "Choose a game :", 0, 5);
-        menu->createText(games[0], games[0], 0, 6);
-        menu->createText(games[1], games[1], 0, 7);
-        menu->createText(games[2], games[2], 0, 8);
-        menu->createText(games[3], games[3], 0, 9);
-        menu->createText(games[4], games[4], 0, 10);
-        menu->createText(games[5], games[5], 0, 11);
-        menu->createText(games[6], games[6], 0, 12);
-        menu->createText("\n 2", "\n", 0, 13);
-        menu->createText("User : ", "User : ", 0, 14);
         menu->drawText("Choose a lib :", 0, 0);
         menu->drawText(libs[0], 0, 1);
         menu->drawText(libs[1], 0, 2);
@@ -110,6 +110,7 @@ menu::menu(IDisplay *menu)
             else if (surligne < 12)
                 surligne++;
         }
+        menu->displayWindow();
     }
 }
 

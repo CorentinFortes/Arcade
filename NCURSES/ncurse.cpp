@@ -5,7 +5,7 @@
 // ** func.cpp
 // */
 
-// #include "ncurse.hpp"
+#include "ncurse.hpp"
 
 // void Display::printMenu(std::vector <std::string> menu, std::vector <std::string> games)
 // {
@@ -160,10 +160,10 @@ void Display::changeColor(std::string key, int x, int y, std::string color)
 
 void Display::modifieText(std::string key, int x, int y, std::string newStr)
 {
-    text[key] = newStr;
-    for (int i = 0; i < key.size(); i++) {
+    for (int i = 0; i < text[key].size(); i++) {
         mvprintw(y, x + i, " ");
     }
+    text[key] = newStr;
     mvprintw(y, x, newStr.c_str());
 }
 
@@ -177,7 +177,7 @@ void Display::displayWindow()
     refresh();
 }
 
-// extern "C" IDisplay* create(void)
-// {
-//     return new Display();
-// }
+extern "C" IDisplay* create(void)
+{
+    return new Display();
+}

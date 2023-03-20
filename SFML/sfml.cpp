@@ -52,10 +52,9 @@ int Display::event()
 
 void Display::changeColor(std::string key, int x, int y, std::string color)
 {
-    if (color == "red") {
-        std::cout << "red" << std::endl;
+    if (color == "red")
         text[key].txt.setFillColor(sf::Color::Red);
-    } if (color == "green")
+    if (color == "green")
         text[key].txt.setFillColor(sf::Color::Green);
     if (color == "blue")
         text[key].txt.setFillColor(sf::Color::Blue);
@@ -72,7 +71,7 @@ void Display::modifieText(std::string key, int x, int y, std::string newStr)
     text[key].txt.setString(text[key].txt.getString() + newStr);
 }
 
-// extern "C" IDisplay* create(void)
-// {
-//     return new Display();
-// }
+extern "C" IDisplay* create(void)
+{
+    return new Display();
+}
