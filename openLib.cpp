@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <dlfcn.h>
+#include <vector>
 #include "IDisplay.hpp"
 #include "IGame.hpp"
 

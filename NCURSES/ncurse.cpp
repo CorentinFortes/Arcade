@@ -1,52 +1,52 @@
-/*
-** EPITECH PROJECT, 2022
-** B-OOP-400-MAR-4-1-arcade-corentin.fortes
-** File description:
-** func.cpp
-*/
+// /*
+// ** EPITECH PROJECT, 2022
+// ** B-OOP-400-MAR-4-1-arcade-corentin.fortes
+// ** File description:
+// ** func.cpp
+// */
 
-#include "ncurse.hpp"
+// #include "ncurse.hpp"
 
-void Display::printMenu(std::vector <std::string> menu, std::vector <std::string> games)
-{
-    mvprintw(0, 0, "Choose a lib :");
-    mvprintw(1, 0, menu[0].c_str());
-    mvprintw(2, 0, menu[1].c_str());
-    mvprintw(3, 0, menu[2].c_str());
-    mvprintw(4, 0, "\n");
-    mvprintw(5, 0, "Choose a game :");
-    mvprintw(6, 0, games[0].c_str());
-    mvprintw(7, 0, games[1].c_str());
-    mvprintw(8, 0, games[2].c_str());
-    mvprintw(9, 0, games[3].c_str());
-    mvprintw(10, 0, games[4].c_str());
-    mvprintw(11, 0, games[5].c_str());
-    mvprintw(12, 0, games[6].c_str());
-    mvprintw(13, 0, "\n");
-    mvprintw(14, 0, "User : ");
-}
+// void Display::printMenu(std::vector <std::string> menu, std::vector <std::string> games)
+// {
+//     mvprintw(0, 0, "Choose a lib :");
+//     mvprintw(1, 0, menu[0].c_str());
+//     mvprintw(2, 0, menu[1].c_str());
+//     mvprintw(3, 0, menu[2].c_str());
+//     mvprintw(4, 0, "\n");
+//     mvprintw(5, 0, "Choose a game :");
+//     mvprintw(6, 0, games[0].c_str());
+//     mvprintw(7, 0, games[1].c_str());
+//     mvprintw(8, 0, games[2].c_str());
+//     mvprintw(9, 0, games[3].c_str());
+//     mvprintw(10, 0, games[4].c_str());
+//     mvprintw(11, 0, games[5].c_str());
+//     mvprintw(12, 0, games[6].c_str());
+//     mvprintw(13, 0, "\n");
+//     mvprintw(14, 0, "User : ");
+// }
 
-std::string Display::printUser()
-{
-    std::string user;
-    while (1) {
-        int ch = getch();
-        if (ch == 27 || ch == 10) {
-            return(user);
-        }
-        if (ch >= 97 && ch <= 122)
-            user += ch;
-        if (ch >= 65 && ch <= 90)
-            user += ch;
-        if (ch == 263) {
-            if (user.size() > 0)
-                user.pop_back();
-            mvprintw(14, 7 + user.size(), " ");
-        }
-        mvprintw(14, 7, user.c_str());
-        refresh();
-    }
-}
+// std::string Display::printUser()
+// {
+//     std::string user;
+//     while (1) {
+//         int ch = getch();
+//         if (ch == 27 || ch == 10) {
+//             return(user);
+//         }
+//         if (ch >= 97 && ch <= 122)
+//             user += ch;
+//         if (ch >= 65 && ch <= 90)
+//             user += ch;
+//         if (ch == 263) {
+//             if (user.size() > 0)
+//                 user.pop_back();
+//             mvprintw(14, 7 + user.size(), " ");
+//         }
+//         mvprintw(14, 7, user.c_str());
+//         refresh();
+//     }
+// }
 
 // std::string Display::createMenu(void)
 // {
@@ -177,7 +177,7 @@ void Display::displayWindow()
     refresh();
 }
 
-extern "C" IDisplay* create(void)
-{
-    return new Display();
-}
+// extern "C" IDisplay* create(void)
+// {
+//     return new Display();
+// }
