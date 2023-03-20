@@ -12,14 +12,26 @@
 #include <SFML/Network.hpp>
 #include <iostream>
 #include <unistd.h>
+#include <map>
 #include "../IDisplay.hpp"
+#include "Text.hpp"
+#include <tuple>
 
 class Display : public IDisplay
 {
     public:
     Display(){};
     ~Display(){};
-    virtual std::string createMenu(void);
+    void openWindow();
+    void createText(std::string name, std::string str, int x, int y);
+    void drawText(std::string key, int x, int y);
+    int event();
+    void changeColor(std::string key, int x, int y, std::string color);
+    void modifieText(std::string key, int x, int y, std::string newStr);
+    void displayWindow();
+    void closeWindow();
+
     private:
-    
+    sf::RenderWindow window;
+    std::map<std::string, Text> text;
 };
