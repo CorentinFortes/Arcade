@@ -139,7 +139,7 @@ void Display::changeColor(std::string key, int x, int y, std::string color)
     init_pair(2, COLOR_BLACK, COLOR_GREEN);
     init_pair(3, COLOR_BLACK, COLOR_BLUE);
     init_pair(4, COLOR_BLACK, COLOR_YELLOW);
-    init_pair(5, COLOR_BLACK, COLOR_WHITE);
+    init_pair(5, COLOR_WHITE, COLOR_BLACK);
     if (color == "red")
         attron(COLOR_PAIR(1));
     if (color == "green")

@@ -71,9 +71,9 @@ menu::menu(IDisplay *menu)
         menu->drawText("User : ", 0, 14);
         if (surligne != -1) {
             if (surligne < 4)
-                menu->changeColor(libs[surligne - 1], 0, surligne, "white");
+                menu->changeColor(libs[surligne - 1], 0, surligne, "red");
             if (surligne > 5)
-                menu->changeColor(games[surligne - 6], 0, surligne, "white");
+                menu->changeColor(games[surligne - 6], 0, surligne, "red");
         }
         if (selectlib != -1)
             menu->changeColor(libs[selectlib - 1], 0, selectlib, "yellow");
@@ -99,16 +99,28 @@ menu::menu(IDisplay *menu)
             break;
         }
         if (ch == 259) {
-            if (surligne == 6)
+            if (surligne == 6) {
+                menu->changeColor(games[0], 0, 6, "white");
                 surligne = 3;
-            else if (surligne > 1)
+            } else if (surligne > 1) {
+                if (surligne < 4)
+                    menu->changeColor(libs[surligne - 1], 0, surligne, "white");
+                if (surligne > 5)
+                    menu->changeColor(games[surligne - 6], 0, surligne, "white");
                 surligne--;
+            }
         }
         if (ch == 258) {
-            if (surligne == 3)
+            if (surligne == 3) {
+                menu->changeColor(libs[2], 0, 3, "white");
                 surligne = 6;
-            else if (surligne < 12)
+            } else if (surligne < 12) {
+                if (surligne < 4)
+                    menu->changeColor(libs[surligne - 1], 0, surligne, "white");
+                if (surligne > 5)
+                    menu->changeColor(games[surligne - 6], 0, surligne, "white");
                 surligne++;
+            }
         }
         menu->displayWindow();
     }
