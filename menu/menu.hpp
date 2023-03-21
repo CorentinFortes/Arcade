@@ -14,7 +14,7 @@
 class menu : public IGame
 {
     private:
-        std::string printUser(IDisplay *menu);
+        std::string printUser(IDisplay *menu, std::vector <std::string> libs, std::vector <std::string> games, int selectlib, int selectgame);
 
     public:
         menu(IDisplay *display);

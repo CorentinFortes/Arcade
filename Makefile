@@ -23,5 +23,6 @@ clean :
 
 fclean : clean
 	rm -f $(NAME)
+	rm -f ./lib/*.so
 
 re :	 fclean all

@@ -20,6 +20,7 @@ void Display::closeWindow()
 void Display::displayWindow()
 {
     window.display();
+    window.clear();
 }
 
 void Display::createText(std::string name, std::string str, int x, int y)
@@ -44,6 +45,10 @@ int Display::event()
             return 1;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return))
             return 2;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+            return 259;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+            return 258;
         if (event.type == sf::Event::TextEntered)
             return event.text.unicode;
     }
@@ -68,7 +73,8 @@ void Display::changeColor(std::string key, int x, int y, std::string color)
 
 void Display::modifieText(std::string key, int x, int y, std::string newStr)
 {
-    text[key].txt.setString(text[key].txt.getString() + newStr);
+    // window.clear();
+    text[key].txt.setString(newStr);
 }
 
 extern "C" IDisplay* create(void)
