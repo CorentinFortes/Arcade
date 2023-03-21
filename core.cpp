@@ -13,6 +13,11 @@ Core::Core(std::string lib, std::string game, std::string user)
     if (!handle)
         return;
     creator create = (creator) dlsym(handle, "create");
-    IDisplay *jeu = create();
+    IDisplay *cr = create();
+    void *game_ = openlib(game.c_str());
+    if (!game_)
+        return;
+    jeu_menu jeu = (jeu_menu) dlsym(game_, "create");
+    IGame *j = jeu(cr);
     
 }

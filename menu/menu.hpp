@@ -10,6 +10,7 @@
 #include <dlfcn.h>
 #include "../IDisplay.hpp"
 #include "../IGame.hpp"
+#include "../core.hpp"
 
 class menu : public IGame
 {

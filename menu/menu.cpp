@@ -125,8 +125,10 @@ menu::menu(IDisplay *menu)
                 retour += printUser(menu, libs, games, selectlib, selectgame);
                 if (retour.empty() == false) {
                     menu->closeWindow();
+                    // Core newjeu(libs[selectlib - 1], games[selectgame - 1], retour);
                     break;
                 }
+                break;
                 // return (games[selectgame - 6] + " " + menu[selectlib - 1] + " " + retour);
             }
         }

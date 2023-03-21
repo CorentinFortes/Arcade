@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include "../openLib.cpp"
+#include "openLib.cpp"
 #include <dlfcn.h>
 #include <iostream>
 #include <string>
