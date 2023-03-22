@@ -7,6 +7,9 @@
 
 #include "core.hpp"
 
+typedef IDisplay* (*creator) ();
+typedef IGame* (*jeu_menu) (IDisplay *cr);
+
 Core::Core(std::string lib, std::string game, std::string user)
 {
     void *handle = openlib(lib.c_str());
@@ -19,5 +22,4 @@ Core::Core(std::string lib, std::string game, std::string user)
         return;
     jeu_menu jeu = (jeu_menu) dlsym(game_, "create");
     IGame *j = jeu(cr);
-    
 }

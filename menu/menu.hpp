@@ -19,9 +19,9 @@ class menu : public IGame
 
     public:
         menu(IDisplay *display);
-        ~menu();
-};
+        ~menu(){};
+        std::string finish();
 
-menu::~menu()
-{
-}
+    public:
+    std::string retour;
+};

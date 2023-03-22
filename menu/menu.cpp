@@ -59,7 +59,7 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
 
 menu::menu(IDisplay *menu)
 {
-    std::string retour;
+    std::string username;
     std::vector <std::string> libs = {"./lib/arcade_ncurses.so", "./lib/arcade_sdl.so", "./lib/arcade_sfml.so"};
     std::vector <std::string> games = {"./lib/arcade_centipede.so", "./lib/arcade_menu.so", "./lib/nibbler.so",
     "./lib/arcade_pacman.so", "./lib/arcade_qix.so", "./lib/arcade_snake.so" , "./lib/arcade_solarfox.so"};
@@ -123,8 +123,9 @@ menu::menu(IDisplay *menu)
                 selectgame = surligne;
             }
             if (selectlib != -1 && selectgame != -1) {
-                retour += printUser(menu, libs, games, selectlib, selectgame);
-                if (retour.empty() == false) {
+                username += printUser(menu, libs, games, selectlib, selectgame);
+                if (username.empty() == false) {
+                    retour = retour + libs[selectlib - 1] + " " + games[selectgame - 6] + " " + username;
                     menu->closeWindow();
                     // Core newjeu(libs[selectlib - 1], games[selectgame - 1], retour);
                     break;
@@ -163,6 +164,11 @@ menu::menu(IDisplay *menu)
         }
         menu->displayWindow();
     }
+}
+
+std::string menu::finish()
+{
+    return retour;
 }
 
 extern "C" menu* create(IDisplay *cr)

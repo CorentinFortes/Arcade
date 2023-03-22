@@ -16,5 +16,6 @@ class IGame
     public:
         IGame() = default;
         ~IGame() = default;
+        virtual std::string finish() = 0;
 };
 

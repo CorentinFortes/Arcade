@@ -24,3 +24,5 @@ class IDisplay
     virtual void closeWindow() = 0;
     virtual void displayWindow() = 0;
 };
+
+void *openlib(std::string path);
