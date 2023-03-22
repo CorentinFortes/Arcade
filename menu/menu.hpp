@@ -21,7 +21,9 @@ class menu : public IGame
         menu(IDisplay *display);
         ~menu(){};
         std::string finish();
+        bool quit();
 
     public:
     std::string retour;
+    bool isQuit;
 };

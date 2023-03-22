@@ -39,12 +39,14 @@ int main(int ac, char **av)
     jeu_menu jeu = (jeu_menu) dlsym(game, "create");
     IGame *j = jeu(cr);
     std::string retour = j->finish();
-    std::string lib = retour.substr(0, retour.find(" "));
-    retour.erase(0, retour.find(" ") + 1);
-    std::string game_ = retour.substr(0, retour.find(" "));
-    retour.erase(0, retour.find(" ") + 1);
-    std::string user = retour.substr(0, retour.find(" "));
-    Core core(lib, game_, user);
+    if (retour.length() > 0) {
+        std::string lib = retour.substr(0, retour.find(" "));
+        retour.erase(0, retour.find(" ") + 1);
+        std::string game_ = retour.substr(0, retour.find(" "));
+        retour.erase(0, retour.find(" ") + 1);
+        std::string user = retour.substr(0, retour.find(" "));
+        Core core(lib, game_, user);
+    }
     dlclose(handle);
     return 0;
 }
