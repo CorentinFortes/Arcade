@@ -5,14 +5,7 @@
 ** test.cpp
 */
 
-#include <iostream>
-#include <dlfcn.h>
-#include <vector>
-#include "IDisplay.hpp"
-#include "IGame.hpp"
-
-typedef IDisplay* (*creator) ();
-typedef IGame* (*jeu_menu) (IDisplay *cr);
+#include "openLib.hpp"
 
 void *openlib(std::string path)
 {
