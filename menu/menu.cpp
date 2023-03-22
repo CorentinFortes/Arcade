@@ -47,7 +47,8 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
         menu->drawText(games[6], 0, 12);
         menu->drawText("\n 2", 0, 13);
         menu->drawText("User : ", 0, 14);
-        menu->drawText("user", 7, 14);
+        if (user.length() > 0)
+            menu->drawText("user", 7, 14);
         if (selectlib != -1)
             menu->changeColor(libs[selectlib - 1], 0, selectlib, "yellow");
         if (selectgame != -1)
