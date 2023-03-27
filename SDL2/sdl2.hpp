@@ -29,8 +29,6 @@ class Display : public IDisplay
     int event();
     void changeColor(std::string key, int x, int y, std::string color);
     void modifieText(std::string key, int x, int y, std::string newStr);
-    void createImage(std::string name, std::string path, int x, int y, char chara) {};
-    void drawImage(std::string key, int x, int y, std::string color) {};
 
     private:
     SDL_Window *window;

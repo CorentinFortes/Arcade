@@ -29,6 +29,8 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
         menu->drawText(games[6], 0, 12);
         menu->drawText("\n 2", 0, 13);
         menu->drawText("User : ", 0, 14);
+        if (user.length() > 0)
+            menu->drawText("user", 7, 14);
         if (selectlib != -1)
             menu->changeColor(libs[selectlib - 1], 0, selectlib, "yellow");
         if (selectgame != -1)
@@ -58,6 +60,9 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
 
 menu::menu(IDisplay *menu)
 {
+    isQuit = false;
+    std::string username;
+    std::vector <std::string> libs = {"./lib/arcade_ncurses.so", "./lib/arcade_sdl2.so", "./lib/arcade_sfml.so"};
     isQuit = false;
     std::string username;
     std::vector <std::string> libs = {"./lib/arcade_ncurses.so", "./lib/arcade_sdl2.so", "./lib/arcade_sfml.so"};
@@ -126,6 +131,9 @@ menu::menu(IDisplay *menu)
                 username += printUser(menu, libs, games, selectlib, selectgame);
                 if (username.empty() == false) {
                     retour = retour + libs[selectlib - 1] + " " + games[selectgame - 6] + " " + username;
+                username += printUser(menu, libs, games, selectlib, selectgame);
+                if (username.empty() == false) {
+                    retour = retour + libs[selectlib - 1] + " " + games[selectgame - 6] + " " + username;
                     menu->closeWindow();
                     break;
                 }
@@ -134,6 +142,7 @@ menu::menu(IDisplay *menu)
         }
         if (ch == 1) {
             menu->closeWindow();
+            isQuit = true;
             isQuit = true;
             break;
         }
@@ -163,6 +172,16 @@ menu::menu(IDisplay *menu)
         }
         menu->displayWindow();
     }
+}
+
+bool menu::quit()
+{
+    return isQuit;
+}
+
+std::string menu::finish()
+{
+    return retour;
 }
 
 bool menu::quit()
