@@ -178,4 +178,3 @@ extern "C" IDisplay* create(void)
 {
     return new Display();
 }
-

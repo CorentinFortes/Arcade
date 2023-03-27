@@ -30,6 +30,8 @@ class Display : public IDisplay
     void modifieText(std::string key, int x, int y, std::string newStr);
     void displayWindow();
     void closeWindow();
+    void createImage(std::string name, std::string path, int x, int y, char chara) {};
+    void drawImage(std::string key, int x, int y, std::string color) {};
 
     private:
     sf::RenderWindow window;

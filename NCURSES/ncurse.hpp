@@ -14,6 +14,7 @@ class Display : public IDisplay
     std::string printUser();
     WINDOW *window;
     std::map <std::string, std::string> text;
+    std::map <std::string, char> image;
 
     public:
     Display(){};
@@ -27,4 +28,7 @@ class Display : public IDisplay
     void modifieText(std::string key, int x, int y, std::string newStr);
     void openWindow();
     void closeWindow();
+    void createImage(std::string name, std::string path, int x, int y, char chara);
+    void drawImage(std::string key, int x, int y, std::string color);
+
 };

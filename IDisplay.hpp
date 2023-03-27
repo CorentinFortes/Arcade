@@ -21,6 +21,8 @@ class IDisplay
     virtual int event() = 0;
     virtual void changeColor(std::string key, int x, int y, std::string color) = 0;
     virtual void modifieText(std::string key, int x, int y, std::string newStr) = 0;
+    virtual void createImage(std::string name, std::string path, int x, int y, char chara) = 0;
+    virtual void drawImage(std::string key, int x, int y, std::string color) = 0;
     virtual void closeWindow() = 0;
     virtual void displayWindow() = 0;
 };
