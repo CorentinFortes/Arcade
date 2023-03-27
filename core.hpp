@@ -7,16 +7,17 @@
 
 #pragma once
 
-#include "openLib.hpp"
+// #include "openLib.cpp"
+#include "IDisplay.hpp"
+#include "IGame.hpp"
 #include <dlfcn.h>
 #include <iostream>
 #include <string>
 
 class Core
 {
-private:
-    
-public:
+    public:
     Core(std::string lib, std::string game, std::string user);
     ~Core(){};
 };
+

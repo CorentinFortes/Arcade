@@ -1,22 +1,40 @@
-// /*
-// ** EPITECH PROJECT, 2022
-// ** B-OOP-400-MAR-4-1-arcade-corentin.fortes
-// ** File description:
-// ** sdl2.hpp
-// */
-// #pragma once
-// #include "../IDisplay.hpp"
-// #include <iostream>
-// #include <string>
-// #include <vector>
-// #include <SDL2/SDL.h>
-// // #include <SDL2/SDL_ttf.h>
+/*
+** EPITECH PROJECT, 2022
+** B-OOP-400-MAR-4-1-arcade-corentin.fortes
+** File description:
+** sdl2.hpp
+*/
+
+#pragma once
+#include "../IDisplay.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_image.h>
 
 
-// class Display : public IDisplay
-// {
-// public:
-//     Display(){};
-//     ~Display(){};
-//     std::string createMenu(void);
-// };
+class Display : public IDisplay
+{
+    public:
+    Display(){};
+    ~Display(){};
+    void openWindow();
+    void closeWindow();
+    void displayWindow();
+    void createText(std::string name, std::string str, int x, int y);
+    void drawText(std::string key, int x, int y);
+    int event();
+    void changeColor(std::string key, int x, int y, std::string color);
+    void modifieText(std::string key, int x, int y, std::string newStr);
+
+    private:
+    SDL_Window *window;
+    SDL_Renderer *renderer;
+    SDL_Color color[6];
+    std::map<std::string, SDL_Color> _color;
+    std::map<std::string, SDL_Texture *> _text;
+    std::map<std::string, SDL_Surface *> _surface;
+};

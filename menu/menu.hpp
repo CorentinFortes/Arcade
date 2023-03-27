@@ -19,9 +19,11 @@ class menu : public IGame
 
     public:
         menu(IDisplay *display);
-        ~menu();
-};
+        ~menu(){};
+        std::string finish();
+        bool quit();
 
-menu::~menu()
-{
-}
+    public:
+    std::string retour;
+    bool isQuit;
+};

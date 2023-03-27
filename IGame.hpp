@@ -10,11 +10,10 @@
 
 class IGame
 {
-    private:
-
-
     public:
         IGame() = default;
         ~IGame() = default;
+        virtual std::string finish() = 0;
+        virtual bool quit() = 0;
 };
 

@@ -29,7 +29,6 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
             }
             if (user.size() > 0)
                 user.pop_back();
-            // menu->modifieText("user", 7, 14, user);
         }
         menu->modifieText("user", 7, 14, user);
         menu->drawText("Choose a lib :", 0, 0);
@@ -47,7 +46,8 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
         menu->drawText(games[6], 0, 12);
         menu->drawText("\n 2", 0, 13);
         menu->drawText("User : ", 0, 14);
-        menu->drawText("user", 7, 14);
+        if (user.length() > 0)
+            menu->drawText("user", 7, 14);
         if (selectlib != -1)
             menu->changeColor(libs[selectlib - 1], 0, selectlib, "yellow");
         if (selectgame != -1)
@@ -58,8 +58,9 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
 
 menu::menu(IDisplay *menu)
 {
-    std::string retour;
-    std::vector <std::string> libs = {"./lib/arcade_ncurses.so", "./lib/arcade_sdl.so", "./lib/arcade_sfml.so"};
+    isQuit = false;
+    std::string username;
+    std::vector <std::string> libs = {"./lib/arcade_ncurses.so", "./lib/arcade_sdl2.so", "./lib/arcade_sfml.so"};
     std::vector <std::string> games = {"./lib/arcade_centipede.so", "./lib/arcade_menu.so", "./lib/nibbler.so",
     "./lib/arcade_pacman.so", "./lib/arcade_qix.so", "./lib/arcade_snake.so" , "./lib/arcade_solarfox.so"};
     int selectgame = -1, selectlib = -1, surligne = 1;
@@ -122,18 +123,18 @@ menu::menu(IDisplay *menu)
                 selectgame = surligne;
             }
             if (selectlib != -1 && selectgame != -1) {
-                retour += printUser(menu, libs, games, selectlib, selectgame);
-                if (retour.empty() == false) {
+                username += printUser(menu, libs, games, selectlib, selectgame);
+                if (username.empty() == false) {
+                    retour = retour + libs[selectlib - 1] + " " + games[selectgame - 6] + " " + username;
                     menu->closeWindow();
-                    Core newjeu(libs[selectlib - 1], games[selectgame - 1], retour);
-                    break;      
+                    break;
                 }
                 break;
-                // return (games[selectgame - 6] + " " + menu[selectlib - 1] + " " + retour);
             }
         }
         if (ch == 1) {
             menu->closeWindow();
+            isQuit = true;
             break;
         }
         if (ch == 259) {
@@ -162,6 +163,16 @@ menu::menu(IDisplay *menu)
         }
         menu->displayWindow();
     }
+}
+
+bool menu::quit()
+{
+    return isQuit;
+}
+
+std::string menu::finish()
+{
+    return retour;
 }
 
 extern "C" menu* create(IDisplay *cr)
