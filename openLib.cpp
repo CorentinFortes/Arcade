@@ -48,5 +48,6 @@ int main(int ac, char **av)
         Core core(lib, game_, user);
     }
     dlclose(handle);
+    dlclose(game);
     return 0;
 }

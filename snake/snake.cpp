@@ -28,3 +28,8 @@ extern "C" snake* create(IDisplay *cr)
 {
     return new snake(cr);
 }
+
+extern "C" bool islib()
+{
+    return false;
+}

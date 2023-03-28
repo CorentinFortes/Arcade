@@ -13,11 +13,22 @@ void Display::openWindow()
     TTF_Init();
     window = SDL_CreateWindow("SDL2 Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 700, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    color[0] = {255, 255, 255, 255};
+    color[1] = {255, 0, 0, 255};
+    color[2] = {0, 255, 0, 255};
+    color[3] = {0, 0, 255, 255};
+    color[4] = {255, 255, 0, 255};
+    color[5] = {255, 0, 255, 255};
+    font = TTF_OpenFont("lib/Lato-Regular.ttf", 36);
 }
 
 void Display::closeWindow()
 {
+    TTF_CloseFont(font);
     SDL_DestroyWindow(window);
+    for (auto it = _text.begin(); it != _text.end(); it++)
+        SDL_DestroyTexture(it->second);
+    SDL_DestroyRenderer(renderer);
     SDL_Quit();
     TTF_Quit();
 }
@@ -30,15 +41,7 @@ void Display::displayWindow()
 
 void Display::createText(std::string name, std::string str, int x, int y)
 {
-    SDL_Init(SDL_INIT_VIDEO);
-    TTF_Init();
     TTF_Font *font = TTF_OpenFont("lib/Lato-Regular.ttf", 36);
-    color[0] = {255, 255, 255, 255};
-    color[1] = {255, 0, 0, 255};
-    color[2] = {0, 255, 0, 255};
-    color[3] = {0, 0, 255, 255};
-    color[4] = {255, 255, 0, 255};
-    color[5] = {255, 0, 255, 255};
     if (str.length() == 0)
         str = " ";
     else if (str.find('\n') != std::string::npos)
@@ -56,7 +59,6 @@ void Display::drawText(std::string key, int x, int y)
     SDL_Rect rect = {x + 10, y * 40, _surface[key]->w, _surface[key]->h};
     SDL_QueryTexture(_text[key], NULL, NULL, &rect.w, &rect.h);
     SDL_RenderCopy(renderer, _text[key], NULL, &rect);
-    SDL_RenderPresent(renderer);
 }
 
 int Display::event()
@@ -133,7 +135,7 @@ int Display::event()
                     case SDLK_z:
                         return 122;
                     default:
-                        return 0;
+                        return -1;
                 }
         }
     }
@@ -145,22 +147,22 @@ void Display::changeColor(std::string key, int x, int y, std::string c)
     SDL_FreeSurface(_surface[key]);
     if (c == "red") {
         _color[key] = color[1];
-        _surface[key] = TTF_RenderText_Solid(TTF_OpenFont("lib/Lato-Regular.ttf", 36), key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
     } if (c == "green") {
         _color[key] = color[2];
-        _surface[key] = TTF_RenderText_Solid(TTF_OpenFont("lib/Lato-Regular.ttf", 36), key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
     } if (c == "blue") {
         _color[key] = color[3];
-        _surface[key] = TTF_RenderText_Solid(TTF_OpenFont("lib/Lato-Regular.ttf", 36), key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
     } if (c == "yellow") {
         _color[key] = color[4];
-        _surface[key] = TTF_RenderText_Solid(TTF_OpenFont("lib/Lato-Regular.ttf", 36), key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
     } if (c == "black") {
         _color[key] = color[5];
-        _surface[key] = TTF_RenderText_Solid(TTF_OpenFont("lib/Lato-Regular.ttf", 36), key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
     } if (c == "white") {
         _color[key] = color[0];
-        _surface[key] = TTF_RenderText_Solid(TTF_OpenFont("lib/Lato-Regular.ttf", 36), key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
     }
     SDL_DestroyTexture(_text[key]);
     _text[key] = SDL_CreateTextureFromSurface(renderer, _surface[key]);
@@ -172,9 +174,15 @@ void Display::modifieText(std::string key, int x, int y, std::string str)
     _surface[key] = TTF_RenderText_Solid(TTF_OpenFont("lib/Lato-Regular.ttf", 36), str.c_str(), _color[key]);
     SDL_DestroyTexture(_text[key]);
     _text[key] = SDL_CreateTextureFromSurface(renderer, _surface[key]);
+    SDL_RenderClear(renderer);
 }
 
 extern "C" IDisplay* create(void)
 {
     return new Display();
+}
+
+extern "C" bool islib()
+{
+    return true;
 }

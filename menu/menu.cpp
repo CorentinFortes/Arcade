@@ -7,34 +7,42 @@
 
 #include "menu.hpp"
 
+typedef bool* (*typelib) ();
+
+void *openlib(std::string path)
+{
+    void *handle = dlopen(path.c_str(), RTLD_LAZY);
+    if (!handle) {
+        std::cerr << "Cannot open library: " << dlerror() << '\n';
+        return NULL;
+    }
+    return handle;
+}
+
 std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std::vector <std::string> games, int selectlib, int selectgame)
 {
     std::string user;
-    menu->createText("user", user, 100, 14);
+    menu->createText("user", user, 100, max_tot + 2);
     int empty = 0;
     while (1) {
-        menu->modifieText("user", 7, 14, user);
+        menu->modifieText("user", 7, max_tot + 2, user);
         menu->drawText("Choose a lib :", 0, 0);
-        menu->drawText(libs[0], 0, 1);
-        menu->drawText(libs[1], 0, 2);
-        menu->drawText(libs[2], 0, 3);
-        menu->drawText("\n 1", 0, 4);
-        menu->drawText("Choose a game :", 0, 5);
-        menu->drawText(games[0], 0, 6);
-        menu->drawText(games[1], 0, 7);
-        menu->drawText(games[2], 0, 8);
-        menu->drawText(games[3], 0, 9);
-        menu->drawText(games[4], 0, 10);
-        menu->drawText(games[5], 0, 11);
-        menu->drawText(games[6], 0, 12);
-        menu->drawText("\n 2", 0, 13);
-        menu->drawText("User : ", 0, 14);
+        for (int i = 0; i < max_lib; i++) {
+            menu->drawText(libs[i], 0, i + 1);
+        }
+        menu->drawText("\n 1", 0, max_lib + 1);
+        menu->drawText("Choose a game :", 0, max_lib + 2);
+        for (int i = 0; i < max_game - 1; i++) {
+            menu->drawText(games[i], 0, max_lib + 3 + i);
+        }
+        menu->drawText("\n 2", 0, max_tot + 1);
+        menu->drawText("User : ", 0, max_tot + 2);
         if (user.length() > 0)
-            menu->drawText("user", 7, 14);
+            menu->drawText("user", 7, max_tot + 2);
         if (selectlib != -1)
             menu->changeColor(libs[selectlib - 1], 0, selectlib, "yellow");
         if (selectgame != -1)
-            menu->changeColor(games[selectgame - 6], 0, selectgame, "yellow");
+            menu->changeColor(games[selectgame - max_lib - 3], 0, selectgame, "yellow");
         int ch = menu->event();
         if ((ch == 1 || ch == 2) && empty == 1) {
             return(user);
@@ -53,7 +61,7 @@ std::string menu::printUser(IDisplay *menu, std::vector <std::string> libs, std:
                 user.pop_back();
         }
         if (user.length() > 0)
-            menu->drawText("user", 7, 14);
+            menu->drawText("user", 7, max_tot + 2);
         menu->displayWindow();
     }
 }
@@ -62,72 +70,110 @@ menu::menu(IDisplay *menu)
 {
     isQuit = false;
     std::string username;
-    std::vector <std::string> libs = {"./lib/arcade_ncurses.so", "./lib/arcade_sdl2.so", "./lib/arcade_sfml.so"};
-    std::vector <std::string> games = {"./lib/arcade_centipede.so", "./lib/arcade_menu.so", "./lib/nibbler.so",
-    "./lib/arcade_pacman.so", "./lib/arcade_qix.so", "./lib/arcade_snake.so" , "./lib/arcade_solarfox.so"};
+    std::vector <std::string> libs;
+    std::vector <std::string> games;
+    DIR* dir = opendir("./lib");
+    struct dirent* doss;
+
+    while ((doss = readdir(dir)) != nullptr) {
+        if (doss->d_type == DT_REG) { // Vérifie que l'élément est un fichier régulier
+            std::string filename(doss->d_name);
+            if (filename.length() >= 3 && filename.substr(filename.length() - 3) == ".so") {
+                void *handle = openlib("./lib/" + filename);
+                if (!handle)
+                    return;
+                typelib libt = (typelib) dlsym(handle, "islib");
+                if (libt()) {
+                    libs.push_back("./lib/" + filename);
+                } else {
+                    games.push_back("./lib/" + filename);
+                }
+                dlclose(handle);
+            }
+        }
+    }
+    closedir(dir);
     int selectgame = -1, selectlib = -1, surligne = 1;
     std::string user;
-    menu->createText("user", user, 100, 14);
     int empty = 0;
     menu->openWindow();
     menu->createText("Choose a lib :", "Choose a lib :", 0, 0);
-    menu->createText(libs[0], libs[0], 0, 1);
-    menu->createText(libs[1], libs[1], 0, 2);
-    menu->createText(libs[2], libs[2], 0, 3);
-    menu->createText("\n 1", "\n", 0, 4);
-    menu->createText("Choose a game :", "Choose a game :", 0, 5);
-    menu->createText(games[0], games[0], 0, 6);
-    menu->createText(games[1], games[1], 0, 7);
-    menu->createText(games[2], games[2], 0, 8);
-    menu->createText(games[3], games[3], 0, 9);
-    menu->createText(games[4], games[4], 0, 10);
-    menu->createText(games[5], games[5], 0, 11);
-    menu->createText(games[6], games[6], 0, 12);
-    menu->createText("\n 2", "\n", 0, 13);
-    menu->createText("User : ", "User : ", 0, 14);
+    // menu->createText(libs[0], libs[0], 0, 1);
+    // menu->createText(libs[1], libs[1], 0, 2);
+    // menu->createText(libs[2], libs[2], 0, 3);
+    for (; max_lib < 3; max_lib++) {
+        if (libs.size() > max_lib) {
+            menu->createText(libs[max_lib], libs[max_lib], 0, max_lib + 1);
+        }
+    }
+    menu->createText("\n 1", "\n", 0, max_lib + 1);
+    menu->createText("Choose a game :", "Choose a game :", 0, max_lib + 2);
+    max_tot = max_lib + 2;
+    for (; max_game < 3; max_game++) {
+        if (games.size() > max_game) {
+            menu->createText(games[max_game], games[max_game], 0, max_tot + 1);
+        }
+        max_tot++;
+    }
+    menu->createText("user", user, 100, max_tot + 2);
+    // menu->createText(games[0], games[0], 0, 6);
+    // menu->createText(games[1], games[1], 0, 7);
+    // menu->createText(games[2], games[2], 0, 8);
+    // menu->createText(games[3], games[3], 0, 9);
+    // menu->createText(games[4], games[4], 0, 10);
+    // menu->createText(games[5], games[5], 0, 11);
+    // menu->createText(games[6], games[6], 0, 12);
+    menu->createText("\n 2", "\n", 0, max_tot + 1);
+    menu->createText("User : ", "User : ", 0, max_tot + 2);
     while (1) {
         menu->drawText("Choose a lib :", 0, 0);
-        menu->drawText(libs[0], 0, 1);
-        menu->drawText(libs[1], 0, 2);
-        menu->drawText(libs[2], 0, 3);
-        menu->drawText("\n 1", 0, 4);
-        menu->drawText("Choose a game :", 0, 5);
-        menu->drawText(games[0], 0, 6);
-        menu->drawText(games[1], 0, 7);
-        menu->drawText(games[2], 0, 8);
-        menu->drawText(games[3], 0, 9);
-        menu->drawText(games[4], 0, 10);
-        menu->drawText(games[5], 0, 11);
-        menu->drawText(games[6], 0, 12);
-        menu->drawText("\n 2", 0, 13);
-        menu->drawText("User : ", 0, 14);
+        // menu->drawText(libs[0], 0, 1);
+        // menu->drawText(libs[1], 0, 2);
+        // menu->drawText(libs[2], 0, 3);
+        for (int i = 0; i < max_lib; i++) {
+            menu->drawText(libs[i], 0, i + 1);
+        }
+        menu->drawText("\n 1", 0, max_lib + 1);
+        menu->drawText("Choose a game :", 0, max_lib + 2);
+        for (int i = 0; i < max_game - 1; i++) {
+            menu->drawText(games[i], 0, max_lib + 3 + i);
+        }
+        // menu->drawText(games[0], 0, 6);
+        // menu->drawText(games[1], 0, 7);
+        // menu->drawText(games[2], 0, 8);
+        // menu->drawText(games[3], 0, 9);
+        // menu->drawText(games[4], 0, 10);
+        // menu->drawText(games[5], 0, 11);
+        // menu->drawText(games[6], 0, 12);
+        menu->drawText("\n 2", 0, max_tot + 1);
+        menu->drawText("User : ", 0, max_tot + 2);
         if (surligne != -1) {
-            if (surligne < 4)
+            if (surligne < max_lib + 1)
                 menu->changeColor(libs[surligne - 1], 0, surligne, "red");
-            if (surligne > 5)
-                menu->changeColor(games[surligne - 6], 0, surligne, "red");
+            if (surligne > max_lib + 2)
+                menu->changeColor(games[surligne - max_lib - 3], 0, surligne, "red");
         }
         if (selectlib != -1)
             menu->changeColor(libs[selectlib - 1], 0, selectlib, "yellow");
         if (selectgame != -1)
-            menu->changeColor(games[selectgame - 6], 0, selectgame, "yellow");
+            menu->changeColor(games[selectgame - max_lib - 3], 0, selectgame, "yellow");
 
         int ch = menu->event();
         if (ch == 2) {
-            if (surligne < 4) {
+            if (surligne < max_lib + 1) {
                 if (selectlib != -1)
                     menu->changeColor(libs[selectlib - 1], 0, selectlib, "white");
                 selectlib = surligne;
             }
-            if (surligne > 5) {
+            if (surligne > max_lib + 2) {
                 if (selectgame != -1)
-                    menu->changeColor(games[selectgame - 6], 0, selectgame, "white");
+                    menu->changeColor(games[selectgame - max_lib - 3], 0, selectgame, "white");
                 selectgame = surligne;
             }
             if (selectlib != -1 && selectgame != -1) {
                 username += printUser(menu, libs, games, selectlib, selectgame);
                 if (username.empty() == false) {
-                    retour = retour + libs[selectlib - 1] + " " + games[selectgame - 6] + " " + username;
+                    retour = retour + libs[selectlib - 1] + " " + games[selectgame - max_lib - 3] + " " + username;
                     menu->closeWindow();
                     break;
                 }
@@ -140,26 +186,26 @@ menu::menu(IDisplay *menu)
             break;
         }
         if (ch == 259 && surligne > 1) {
-            if (surligne == 6) {
-                menu->changeColor(games[0], 0, 6, "white");
-                surligne = 3;
+            if (surligne == max_lib + 3) {
+                menu->changeColor(games[0], 0, max_lib + 3, "white");
+                surligne = max_lib;
             } else {
-                if (surligne < 4)
+                if (surligne < max_lib + 1)
                     menu->changeColor(libs[surligne - 1], 0, surligne, "white");
-                if (surligne > 5)
-                    menu->changeColor(games[surligne - 6], 0, surligne, "white");
+                if (surligne > max_lib + 2)
+                    menu->changeColor(games[surligne - max_lib - 3], 0, surligne, "white");
                 surligne--;
             }
         }
-        if (ch == 258 && surligne < 12) {
-            if (surligne == 3) {
-                menu->changeColor(libs[2], 0, 3, "white");
-                surligne = 6;
+        if (ch == 258 && surligne < max_tot - 1) {
+            if (surligne == max_lib) {
+                menu->changeColor(libs[max_lib - 1], 0, max_lib + 1, "white");
+                surligne = max_lib + 3;
             } else {
-                if (surligne < 4)
+                if (surligne < max_lib + 1)
                     menu->changeColor(libs[surligne - 1], 0, surligne, "white");
-                if (surligne > 5)
-                    menu->changeColor(games[surligne - 6], 0, surligne, "white");
+                if (surligne > max_lib + 2)
+                    menu->changeColor(games[surligne - max_lib - 3], 0, surligne, "white");
                 surligne++;
             }
         }
@@ -180,4 +226,9 @@ std::string menu::finish()
 extern "C" menu* create(IDisplay *cr)
 {
     return new menu(cr);
+}
+
+extern "C" bool islib()
+{
+    return false;
 }

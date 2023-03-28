@@ -116,3 +116,8 @@ extern "C" IDisplay* create(void)
 {
     return new Display();
 }
+
+extern "C" bool islib()
+{
+    return true;
+}

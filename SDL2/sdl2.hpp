@@ -36,6 +36,7 @@ class Display : public IDisplay
     SDL_Window *window;
     SDL_Renderer *renderer;
     SDL_Color color[6];
+    TTF_Font *font;
     std::map<std::string, SDL_Color> _color;
     std::map<std::string, SDL_Texture *> _text;
     std::map<std::string, SDL_Surface *> _surface;

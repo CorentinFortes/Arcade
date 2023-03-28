@@ -10,17 +10,11 @@ SRC =	*.cpp
 OBJ = $(SRC:.cpp=.o)
 
 
-all :
-	g++ openLib.cpp core.cpp -ldl -o arcade -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio -lncurses -lSDL2
-	g++ -shared -fPIC ./menu/menu.cpp -o ./lib/arcade_menu.so
-	g++ -shared -fPIC ./snake/snake.cpp -o ./lib/arcade_snake.so
-	g++ -shared -fPIC ./NCURSES/ncurse.cpp -o ./lib/arcade_ncurses.so
-	g++ -shared -fPIC ./SFML/sfml.cpp -o ./lib/arcade_sfml.so
-	g++ -shared -fPIC ./SDL2/sdl2.cpp -o ./lib/arcade_sdl2.so
-	g++ *.cpp -ldl -o arcade -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio -lncurses -lSDL2 -lSDL2_image -lSDL2_ttf
+all : games graphicals core
+	
 
 core :
-	g++ openLib.cpp -ldl -o arcade -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio -lncurses -lSDL2 -lSDL2_image -lSDL2_ttf
+	g++ openLib.cpp core.cpp -ldl -o arcade -lsfml-window -lsfml-system -lsfml-graphics -lsfml-audio -lncurses -lSDL2 -fno-gnu-unique -lSDL2_image -lSDL2_ttf
 
 games :
 	g++ -shared -fPIC ./menu/menu.cpp -o ./lib/arcade_menu.so
