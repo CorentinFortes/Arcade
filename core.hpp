@@ -4,20 +4,30 @@
 ** File description:
 ** core.hpp
 */
-
-#pragma once
-
-// #include "openLib.cpp"
-#include "IDisplay.hpp"
-#include "IGame.hpp"
 #include <dlfcn.h>
 #include <iostream>
 #include <string>
+#include <map>
+#include <chrono>
+#include <thread>
+#include <vector>
+
+#pragma once
+
+#include "IDisplay.hpp"
+#include "IGame.hpp"
+#include "all.hpp"
+// #include "openLib.cpp"
+
+class IGame;
+class IDisplay;
 
 class Core
 {
     public:
+    IGame *game;
+    IDisplay *display;
     Core(std::string lib, std::string game, std::string user);
     ~Core(){};
+    void openLibs(std::string lib, std::string game, std::string user);
 };
-

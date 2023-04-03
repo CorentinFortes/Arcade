@@ -13,17 +13,18 @@ void Display::openWindow()
     keypad(window, TRUE);
     noecho();
     start_color();
+    nodelay(stdscr, TRUE);
     curs_set(0);
 }
 
 void Display::createText(std::string name, std::string str, int x, int y)
 {
-    text.insert(std::map<std::string, std::string>::value_type(name, str));
+    texts.insert(std::map<std::string, std::string>::value_type(name, str));
 }
 
 void Display::drawText(std::string key, int x, int y)
 {
-    mvprintw(y, x, text[key].c_str());
+    mvprintw(y, x, texts[key].c_str());
 }
 
 int Display::event()
@@ -36,7 +37,7 @@ int Display::event()
     return (ch);
 }
 
-void Display::changeColor(std::string key, int x, int y, std::string color)
+void Display::changeColor(std::string str, int x, int y, std::string color)
 {
     init_pair(1, COLOR_BLACK, COLOR_RED);
     init_pair(2, COLOR_BLACK, COLOR_GREEN);
@@ -53,7 +54,7 @@ void Display::changeColor(std::string key, int x, int y, std::string color)
         attron(COLOR_PAIR(4));
     if (color == "white")
         attron(COLOR_PAIR(5));
-    mvprintw(y, x, text[key].c_str());
+    mvprintw(y, x, str.c_str());
     attroff(COLOR_PAIR(1));
     attroff(COLOR_PAIR(2));
     attroff(COLOR_PAIR(3));
@@ -63,10 +64,10 @@ void Display::changeColor(std::string key, int x, int y, std::string color)
 
 void Display::modifieText(std::string key, int x, int y, std::string newStr)
 {
-    for (int i = 0; i < text[key].size(); i++) {
+    for (int i = 0; i < texts[key].size(); i++) {
         mvprintw(y, x + i, " ");
     }
-    text[key] = newStr;
+    texts[key] = newStr;
     mvprintw(y, x, newStr.c_str());
 }
 
@@ -83,7 +84,7 @@ void Display::displayWindow()
 
 void Display::createImage(std::string name, std::string path, int x, int y, char chara)
 {
-    image.insert(std::map<std::string, char>::value_type(name, chara));
+    images.insert(std::map<std::string, char>::value_type(name, chara));
 }
 
 void Display::drawImage(std::string key, int x, int y, std::string color)
@@ -103,7 +104,7 @@ void Display::drawImage(std::string key, int x, int y, std::string color)
         attron(COLOR_PAIR(4));
     if (color == "white")
         attron(COLOR_PAIR(5));
-    char str[1] = {image[key]};
+    char str[1] = {images[key]};
     mvprintw(y, x, str);
     attroff(COLOR_PAIR(1));
     attroff(COLOR_PAIR(2));
@@ -111,6 +112,40 @@ void Display::drawImage(std::string key, int x, int y, std::string color)
     attroff(COLOR_PAIR(4));
     attroff(COLOR_PAIR(5));
 }
+
+void Display::createTexts(std::vector <text> text)
+{
+    for (int i = 0; i < text.size(); i++) {
+        createText(text[i].name, text[i].str, text[i].x, text[i].y);
+    }
+}
+
+void Display::createSprites(std::vector <image> image)
+{
+    for (int i = 0; i < image.size(); i++) {
+        createImage(image[i].name, image[i].path, image[i].x, image[i].y, image[i].chara);
+    }
+}
+
+void Display::drawSprites(std::vector <image> image)
+{
+    for (int i = 0; i < image.size(); i++) {
+        drawImage(image[i].name, image[i].x, image[i].y, image[i].color);
+    }
+}
+
+void Display::drawTexts(std::vector <text> text)
+{
+    for (int i = 0; i < text.size(); i++) {
+        changeColor(text[i].str, text[i].x, text[i].y, text[i].color);
+    }
+}
+
+// std::string Display::changeLib()
+// {
+//     endwin();
+//     std::string str = "lib/sdl2.so";
+// }
 
 extern "C" IDisplay* create(void)
 {

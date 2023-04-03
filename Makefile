@@ -14,16 +14,16 @@ all : games graphicals core
 	
 
 core :
-	g++ openLib.cpp core.cpp -ldl -o arcade -fno-gnu-unique -std=c++17
+	g++ openLib.cpp all.cpp core.cpp -ldl -o arcade -fno-gnu-unique -std=c++17 -g
 
 games :
-	g++ -shared -fPIC ./menu/menu.cpp -o ./lib/arcade_menu.so -std=c++17
-	g++ -shared -fPIC ./snake/snake.cpp -o ./lib/arcade_snake.so -std=c++17
+	g++ -shared -fPIC ./menu/menu.cpp all.cpp -o ./lib/arcade_menu.so -std=c++17 -g 
+	# g++ -shared -fPIC ./snake/snake.cpp all.cpp -o ./lib/arcade_snake.so -std=c++17 -g
 
 graphicals :
-	g++ -shared -fPIC ./NCURSES/ncurse.cpp -o ./lib/arcade_ncurses.so -std=c++17 -lncurses
-	g++ -shared -fPIC ./SFML/sfml.cpp -o ./lib/arcade_sfml.so -std=c++17 -lsfml-window -lsfml-system -lsfml-graphics
-	g++ -shared -fPIC ./SDL2/sdl2.cpp -o ./lib/arcade_sdl2.so -std=c++17 -lSDL2 -lSDL2_image -lSDL2_ttf
+	g++ -shared -fPIC ./NCURSES/ncurse.cpp all.cpp -o ./lib/arcade_ncurses.so -std=c++17 -lncurses -g
+	g++ -shared -fPIC ./SFML/sfml.cpp all.cpp -o ./lib/arcade_sfml.so -std=c++17 -lsfml-window -lsfml-system -lsfml-graphics -g
+	g++ -shared -fPIC ./SDL2/sdl2.cpp all.cpp -o ./lib/arcade_sdl2.so -std=c++17 -lSDL2 -lSDL2_image -lSDL2_ttf -g
 
 clean :
 	rm -f $(OBJ)

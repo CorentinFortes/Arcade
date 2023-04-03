@@ -5,10 +5,10 @@
 ** ITest.hpp
 */
 #pragma once
-#include <iostream>
-#include <string>
-#include <map>
-#include <vector>
+#include "core.hpp"
+
+class text;
+class image;
 
 
 class IDisplay
@@ -25,6 +25,11 @@ class IDisplay
     virtual void drawImage(std::string key, int x, int y, std::string color) = 0;
     virtual void closeWindow() = 0;
     virtual void displayWindow() = 0;
+    virtual void createTexts(std::vector <text> text) = 0;
+    virtual void createSprites(std::vector <image> sprite) = 0;
+    virtual void drawSprites(std::vector <image> sprite) = 0;
+    virtual void drawTexts(std::vector <text> text) = 0;
+    // virtual std::string changeLib() = 0;
 };
 
 void *openlib(std::string path);

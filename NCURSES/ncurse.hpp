@@ -13,8 +13,8 @@ class Display : public IDisplay
     void printMenu(std::vector <std::string> menu, std::vector <std::string> games);
     std::string printUser();
     WINDOW *window;
-    std::map <std::string, std::string> text;
-    std::map <std::string, char> image;
+    std::map <std::string, std::string> texts;
+    std::map <std::string, char> images;
 
     public:
     Display(){};
@@ -30,5 +30,8 @@ class Display : public IDisplay
     void closeWindow();
     void createImage(std::string name, std::string path, int x, int y, char chara);
     void drawImage(std::string key, int x, int y, std::string color);
-
+    void createTexts(std::vector <text> text);
+    void createSprites(std::vector <image> sprite);
+    void drawSprites(std::vector <image> sprite);
+    void drawTexts(std::vector <text> text);
 };

@@ -13,7 +13,7 @@
 #include "core.hpp"
 
 typedef IDisplay* (*creator) ();
-typedef IGame* (*jeu_menu) (IDisplay *cr);
+typedef IGame* (*jeu_menu) ();
 
 void *openlib(std::string path)
 {
@@ -25,29 +25,35 @@ void *openlib(std::string path)
     return handle;
 }
 
-
-int main(int ac, char **av)
+int main (int ac, char **av)
 {
-    void *handle = openlib(av[1]);
-    if (!handle)
-        return 84;
-    void *game = openlib("./lib/arcade_menu.so");
-    if (!game)
-        return 84;
-    creator create = (creator) dlsym(handle, "create");
-    IDisplay *cr = create();
-    jeu_menu jeu = (jeu_menu) dlsym(game, "create");
-    IGame *j = jeu(cr);
-    std::string retour = j->finish();
-    if (retour.length() > 0) {
-        std::string lib = retour.substr(0, retour.find(" "));
-        retour.erase(0, retour.find(" ") + 1);
-        std::string game_ = retour.substr(0, retour.find(" "));
-        retour.erase(0, retour.find(" ") + 1);
-        std::string user = retour.substr(0, retour.find(" "));
-        Core core(lib, game_, user);
-    }
-    dlclose(handle);
-    dlclose(game);
+    Core core(av[1], "./lib/arcade_menu.so", " ");
     return 0;
 }
+
+
+// int main(int ac, char **av)
+// {
+//     void *handle = openlib(av[1]);
+//     if (!handle)
+//         return 84;
+//     void *game = openlib("./lib/arcade_menu.so");
+//     if (!game)
+//         return 84;
+//     creator create = (creator) dlsym(handle, "create");
+//     IDisplay *cr = create();
+//     jeu_menu jeu = (jeu_menu) dlsym(game, "create");
+//     IGame *j = jeu();
+//     std::string retour = j->finish();
+//     if (retour.length() > 0) {
+//         std::string lib = retour.substr(0, retour.find(" "));
+//         retour.erase(0, retour.find(" ") + 1);
+//         std::string game_ = retour.substr(0, retour.find(" "));
+//         retour.erase(0, retour.find(" ") + 1);
+//         std::string user = retour.substr(0, retour.find(" "));
+//         Core core(lib, game_, user);
+//     }
+//     dlclose(handle);
+//     dlclose(game);
+//     return 0;
+// }
