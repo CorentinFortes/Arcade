@@ -157,7 +157,7 @@ std::string menu::input(int ch, std::vector <image> *sprite, std::vector <text> 
             textt->at(findText("user", textt)).str.pop_back();
         }
         user = textt->at(findText("user", textt)).str;
-        if ((ch == 1 || ch == 2)) {
+        if ((ch == 1 || ch == 2) && user != "") {
             isQuit = true;
             user += " " + libs[selectlib - 2] + " " + games[selectgame - max_lib - 4];            
             return user;
