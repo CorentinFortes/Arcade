@@ -129,7 +129,13 @@ void Display::createSprites(std::vector <image> image)
 
 void Display::drawSprites(std::vector <image> image)
 {
+    // if (image.size() != images.size()) {
+    //     images.insert(std::map<std::string, char>::value_type(image.at(image.size() - 1).name, image.at(image.size() - 1).chara));
+
+    // }
     for (int i = 0; i < image.size(); i++) {
+        // if (images[image[i].name] != image[i].chara)
+        //     images[image[i].name] = image[i].chara;
         drawImage(image[i].name, image[i].x, image[i].y, image[i].color, image[i].chara);
     }
 }

@@ -36,7 +36,7 @@ class snake : public IGame
         std::vector <Queue> queue;
 
     public:
-        snake() : isQuit(false), pos_snake_x(1), pos_snake_y(1), pos_food_x(1), pos_food_y(1), direction('d'), score(0) {};
+        snake() : isQuit(false), pos_snake_x(1), pos_snake_y(1), pos_food_x(15), pos_food_y(5), direction('d'), score(0) {};
         ~snake();
         void init(std::vector <image> *sprite, std::vector <text> *text);
         std::string input(int input, std::vector <image> *sprite, std::vector <text> *text);
