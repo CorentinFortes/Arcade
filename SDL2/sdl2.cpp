@@ -10,9 +10,9 @@
 void Display::openWindow()
 { 
     SDL_Init(SDL_INIT_VIDEO);
-    TTF_Init();
     window = SDL_CreateWindow("SDL2 Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 700, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    TTF_Init();
     color[0] = {255, 255, 255, 255};
     color[1] = {255, 0, 0, 255};
     color[2] = {0, 255, 0, 255};
@@ -24,32 +24,38 @@ void Display::openWindow()
 
 void Display::closeWindow()
 {
-    TTF_CloseFont(font);
-    SDL_DestroyWindow(window);
-    for (auto it = _text.begin(); it != _text.end(); it++)
-        SDL_DestroyTexture(it->second);
     SDL_DestroyRenderer(renderer);
-    SDL_Quit();
+    SDL_DestroyWindow(window);
     TTF_Quit();
+    SDL_Quit();
 }
 
 void Display::displayWindow()
 {
     SDL_RenderPresent(renderer);
     SDL_UpdateWindowSurface(window);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    SDL_RenderClear(renderer);
 }
 
 void Display::createText(std::string name, std::string str, int x, int y)
 {
-    TTF_Font *font = TTF_OpenFont("lib/Lato-Regular.ttf", 36);
-    if (str.length() == 0)
-        str = " ";
+    if (str.length() <= 1)
+        _surface[name] = TTF_RenderText_Solid(font, " ", _color[name]);
     else if (str.find('\n') != std::string::npos)
-        str = " ";
+        _surface[name] = TTF_RenderText_Solid(font, " ", _color[name]);
+    else
+        _surface[name] = TTF_RenderText_Solid(font, str.c_str(), _color[name]);
     _color[name] = color[0];
-    _surface[name] = TTF_RenderText_Solid(font, str.c_str(), _color[name]);
     SDL_Texture *texture = SDL_CreateTextureFromSurface(renderer, _surface[name]);
     _text[name] = texture;
+}
+
+void Display::createTexts(std::vector <text> text)
+{
+    for (int i = 0; i < text.size(); i++) {
+        createText(text[i].name, text[i].str, text[i].x, text[i].y);
+    }
 }
 
 void Display::drawText(std::string key, int x, int y)
@@ -57,8 +63,18 @@ void Display::drawText(std::string key, int x, int y)
     if (x == 7)
         x = 100;
     SDL_Rect rect = {x + 10, y * 40, _surface[key]->w, _surface[key]->h};
-    SDL_QueryTexture(_text[key], NULL, NULL, &rect.w, &rect.h);
+    // SDL_QueryTexture(_text[key], NULL, NULL, &rect.w, &rect.h);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    SDL_RenderFillRect(renderer, &rect);
     SDL_RenderCopy(renderer, _text[key], NULL, &rect);
+}
+
+void Display::drawTexts(std::vector <text> text)
+{
+    for (int i = 0; i < text.size(); i++) {
+        changeColor(text[i].name, text[i].x, text[i].y, text[i].color, text[i].str);
+        drawText(text[i].name, text[i].x, text[i].y);
+    }
 }
 
 int Display::event()
@@ -142,29 +158,32 @@ int Display::event()
     return -1;
 }
 
-void Display::changeColor(std::string key, int x, int y, std::string c)
+void Display::changeColor(std::string key, int x, int y, std::string c, std::string name)
 {
     SDL_FreeSurface(_surface[key]);
+    SDL_DestroyTexture(_text[key]);
+    if (name.length() <= 1)
+        name = " ";
     if (c == "red") {
         _color[key] = color[1];
-        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, name.c_str(), _color[key]);
     } if (c == "green") {
         _color[key] = color[2];
-        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, name.c_str(), _color[key]);
     } if (c == "blue") {
         _color[key] = color[3];
-        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, name.c_str(), _color[key]);
     } if (c == "yellow") {
         _color[key] = color[4];
-        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
-    } if (c == "black") {
+        _surface[key] = TTF_RenderText_Solid(font, name.c_str(), _color[key]);
+    } if (c == "pink") {
         _color[key] = color[5];
-        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, name.c_str(), _color[key]);
     } if (c == "white") {
         _color[key] = color[0];
-        _surface[key] = TTF_RenderText_Solid(font, key.c_str(), _color[key]);
+        _surface[key] = TTF_RenderText_Solid(font, name.c_str(), _color[key]);
     }
-    SDL_DestroyTexture(_text[key]);
+    // SDL_DestroyTexture(_text[key]);
     _text[key] = SDL_CreateTextureFromSurface(renderer, _surface[key]);
 }
 

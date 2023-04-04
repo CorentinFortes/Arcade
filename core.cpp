@@ -48,9 +48,10 @@ Core::Core(std::string lib, std::string gamee, std::string user)
         lib = retour.substr(0, retour.find(" "));
         retour.erase(0, retour.find(" ") + 1);
         gamee = retour.substr(0, retour.find(" "));
+        display->closeWindow();
         Core(lib, gamee, user);
     }
-    display->closeWindow();
+    display->closeWindow(); 
 }
 
 
