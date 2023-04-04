@@ -27,15 +27,15 @@ class Display : public IDisplay
     void createText(std::string name, std::string str, int x, int y);
     void drawText(std::string key, int x, int y);
     int event();
-    void changeColor(std::string key, int x, int y, std::string color);
+    void changeColor(std::string key, int x, int y, std::string color, std::string name);
     void modifieText(std::string key, int x, int y, std::string newStr);
     void createImage(std::string name, std::string path, int x, int y, char chara) {};
     void drawImage(std::string key, int x, int y, std::string color, char c) {};
-    void createTexts(std::vector <text> text) {};
+    void createTexts(std::vector <text> text);
     void createSprites(std::vector <image> sprite) {};
     void drawSprites(std::vector <image> sprite) {};
-    void drawTexts(std::vector <text> text) {};
-
+    void drawTexts(std::vector <text> text);
+ 
     private:
     SDL_Window *window;
     SDL_Renderer *renderer;

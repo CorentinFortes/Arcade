@@ -51,7 +51,7 @@ Core::Core(std::string lib, std::string gamee, std::string user)
         display->closeWindow();
         Core(lib, gamee, user);
     }
-    display->closeWindow();
+    display->closeWindow(); 
 }
 
 
