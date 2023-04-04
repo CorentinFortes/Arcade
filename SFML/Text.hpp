@@ -5,22 +5,12 @@
 ** Text.hpp
 */
 #pragma once
-#include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Network.hpp>
 #include <iostream>
 #include <unistd.h>
-
-class A {
-
-    public:
-    A() {};
-    ~A() {
-        std::cout << "A destructor" << std::endl;
-    }
-};
 
 class Text
 {
@@ -60,3 +50,17 @@ class Text
     sf::Text txt;
 };
 
+class SpriteCreator {
+
+    public:
+    SpriteCreator(sf::Texture &texture, sf::Vector2f position) {
+        sprite.setTexture(texture);
+        sprite.setPosition(position);
+    };
+    void draw(sf::RenderWindow &window) {
+        window.draw(sprite);
+    };
+
+    public:
+    sf::Sprite sprite;
+};

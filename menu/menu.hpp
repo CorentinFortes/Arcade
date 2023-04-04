@@ -13,8 +13,6 @@
 #include "../IGame.hpp"
 #include "../core.hpp"
 
-
-
 class menu : public IGame
 {
     private:

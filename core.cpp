@@ -40,7 +40,7 @@ Core::Core(std::string lib, std::string gamee, std::string user)
         display->drawSprites(sprite);
         retour = game->input(display->event(), &sprite, &text);
         game->play(&sprite, &text);
-        display->displayWindow();
+        display->displayWindow(); 
     }
     if (retour != "") {
         user = retour.substr(0, retour.find(" "));

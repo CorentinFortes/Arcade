@@ -8,7 +8,7 @@
 #include "sdl2.hpp"
 
 void Display::openWindow()
-{
+{ 
     SDL_Init(SDL_INIT_VIDEO);
     TTF_Init();
     window = SDL_CreateWindow("SDL2 Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 700, SDL_WINDOW_SHOWN);
