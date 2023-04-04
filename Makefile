@@ -18,7 +18,7 @@ core :
 
 games :
 	g++ -shared -fPIC ./menu/menu.cpp all.cpp -o ./lib/arcade_menu.so -std=c++17 -g 
-	# g++ -shared -fPIC ./snake/snake.cpp all.cpp -o ./lib/arcade_snake.so -std=c++17 -g
+	g++ -shared -fPIC ./snake/snake.cpp all.cpp -o ./lib/arcade_snake.so -std=c++17 -g
 
 graphicals :
 	g++ -shared -fPIC ./NCURSES/ncurse.cpp all.cpp -o ./lib/arcade_ncurses.so -std=c++17 -lncurses -g

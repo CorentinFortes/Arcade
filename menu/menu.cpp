@@ -79,7 +79,7 @@ std::string menu::input(int ch, std::vector <image> *sprite, std::vector <text> 
             // menu->changeLib();
         }
         if (ch == 2) {
-            if (surligne < max_lib + 1) {
+            if (surligne < max_lib + 2) {
                 if (selectlib != -1)
                     textt->at(findText(libs[selectlib - 1], textt)).color = "white";
                     // menu->changeColor(libs[selectlib - 1], 0, selectlib, "white");
@@ -125,7 +125,7 @@ std::string menu::input(int ch, std::vector <image> *sprite, std::vector <text> 
                 surligne--;
             }
         }
-        if (ch == 258 && surligne < max_tot - 1) {
+        if (ch == 258 && surligne < max_tot + 1) {
             if (surligne == max_lib + 1) {
                 // textt->at(findText(libs[max_lib - 1], textt)).color = "yellow";
                 // menu->changeColor(libs[max_lib - 1], 0, max_lib + 1, "white");

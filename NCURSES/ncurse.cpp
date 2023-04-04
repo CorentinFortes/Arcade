@@ -87,7 +87,7 @@ void Display::createImage(std::string name, std::string path, int x, int y, char
     images.insert(std::map<std::string, char>::value_type(name, chara));
 }
 
-void Display::drawImage(std::string key, int x, int y, std::string color)
+void Display::drawImage(std::string key, int x, int y, std::string color, char c)
 {
     init_pair(1, COLOR_BLACK, COLOR_RED);
     init_pair(2, COLOR_BLACK, COLOR_GREEN);
@@ -104,7 +104,7 @@ void Display::drawImage(std::string key, int x, int y, std::string color)
         attron(COLOR_PAIR(4));
     if (color == "white")
         attron(COLOR_PAIR(5));
-    char str[1] = {images[key]};
+    char str[] = {c, '\0'};
     mvprintw(y, x, str);
     attroff(COLOR_PAIR(1));
     attroff(COLOR_PAIR(2));
@@ -130,7 +130,7 @@ void Display::createSprites(std::vector <image> image)
 void Display::drawSprites(std::vector <image> image)
 {
     for (int i = 0; i < image.size(); i++) {
-        drawImage(image[i].name, image[i].x, image[i].y, image[i].color);
+        drawImage(image[i].name, image[i].x, image[i].y, image[i].color, image[i].chara);
     }
 }
 
