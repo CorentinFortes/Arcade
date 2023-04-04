@@ -71,19 +71,24 @@ std::string snake::input(int ch, std::vector <image> *sprite, std::vector <text>
 void snake::play(std::vector <image> *sprite, std::vector <text> *text)
 {
     if (direction == 'h') {
+        sprite->at(findImage("snake_0", sprite)).chara = 'v';
         pos_snake_y += 1;
     }
     if (direction == 'b') {
+        sprite->at(findImage("snake_0", sprite)).chara = '^';
         pos_snake_y -= 1;
     }
     if (direction == 'd') {
+        sprite->at(findImage("snake_0", sprite)).chara = '>';
         pos_snake_x += 1;
     }
     if (direction == 'g') {
+        sprite->at(findImage("snake_0", sprite)).chara = '<';
         pos_snake_x -= 1;
     }
     if (pos_snake_x > 58 || pos_snake_x < 1 || pos_snake_y > 15 || pos_snake_y < 1) {
         isQuit = true;
+        return;
     }
     for (int i = score; i >= 1; i--) {
         std::string name = "snake_" + std::to_string(i);
@@ -99,20 +104,26 @@ void snake::play(std::vector <image> *sprite, std::vector <text> *text)
     sprite->at(findImage("snake_0", sprite)).y = pos_snake_y;
     sprite->at(findImage("food", sprite)).x = pos_food_x;
     sprite->at(findImage("food", sprite)).y = pos_food_y;
+    // for (int i = 1; i <= score; i++) {
+    //     std::string name = "snake_" + std::to_string(i);
+    //     int x = sprite->at(findImage("snake_" + std::to_string(i), sprite)).x;
+    //     int y = sprite->at(findImage("snake_" + std::to_string(i), sprite)).x;
+    //     if (x == pos_snake_x && y == pos_snake_y) {
+    //         isQuit = true;
+    //     }
+    // }
+    for (int i = score; i >= 1; i--) {
+        std::string name = "snake_" + std::to_string(i);
+        if (sprite->at(findImage(name, sprite)).x == pos_snake_x && sprite->at(findImage(name, sprite)).y == pos_snake_y) {
+            isQuit = true;
+        }
+    }
     if (pos_snake_x == pos_food_x && pos_snake_y == pos_food_y) {
         pos_food_x = rand() % 58 + 1;
         pos_food_y = rand() % 15 + 1;
         score += 1;
         std::string name = "snake_" + std::to_string(score);
         (*sprite).push_back(image(name, "", pos_snake_x, pos_snake_y, '*', "green"));
-    }
-    for (int i = 1; i <= score; i++) {
-        std::string name = "snake_" + std::to_string(i);
-        int x = sprite->at(findImage("snake_" + std::to_string(i), sprite)).x;
-        int y = sprite->at(findImage("snake_" + std::to_string(i), sprite)).x;
-        if (x == pos_snake_x && y == pos_snake_y) {
-            isQuit = true;
-        }
     }
 }
 
