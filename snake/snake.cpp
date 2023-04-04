@@ -43,8 +43,11 @@ void snake::init(std::vector <image> *sprite, std::vector <text> *textt)
         (*textt).push_back(text("map2", "|", 59, i + 1,"white"));
     }
     (*textt).push_back(text("map0", "\\----------------------------------------------------------/", 0, 16,"white"));
-    (*sprite).push_back(image("snake_0", "", 1, 1, '>', "green"));
+    (*sprite).push_back(image("snake_0", "", 25, 8, '>', "green"));
     (*sprite).push_back(image("food", "", 15, 5, 'O', "red"));
+    (*sprite).push_back(image("snake_1", "", 25, 8, '*', "green"));
+    (*sprite).push_back(image("snake_2", "", 25, 8, '*', "green"));
+    (*sprite).push_back(image("snake_3", "", 25, 8, '*', "green"));
 }
 
 std::string snake::input(int ch, std::vector <image> *sprite, std::vector <text> *textt)
