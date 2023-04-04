@@ -36,7 +36,7 @@ core :
 
 games :
 	g++ -shared -fPIC ./menu/menu.cpp all.cpp -o ./lib/arcade_menu.so $(INCLUDE_PATH)
-	# g++ -shared -fPIC ./snake/snake.cpp all.cpp -o ./lib/arcade_snake.so $(INCLUDE_PATH)
+	g++ -shared -fPIC ./snake/snake.cpp all.cpp -o ./lib/arcade_snake.so $(INCLUDE_PATH)
 
 graphicals :
 	g++ -shared -fPIC ./NCURSES/ncurse.cpp all.cpp -o ./lib/arcade_ncurses.so -lncurses $(INCLUDE_PATH)

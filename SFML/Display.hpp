@@ -30,7 +30,7 @@ class Display : public IDisplay
     void displayWindow();
     void closeWindow();
     void createImage(std::string name, std::string path, int x, int y, char chara);
-    void drawImage(std::string key, int x, int y, std::string color) {};
+    void drawImage(std::string key, int x, int y, std::string color, char c) {};
     void createTexts(std::vector <text> text);
     void createSprites(std::vector <image> sprite);
     void drawSprites(std::vector <image> sprite);

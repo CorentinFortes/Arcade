@@ -35,7 +35,7 @@ Core::Core(std::string lib, std::string gamee, std::string user)
     display->createTexts(text);
     display->createSprites(sprite);
     while (game->quit() == false) {
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(150));
         display->drawTexts(text);
         display->drawSprites(sprite);
         retour = game->input(display->event(), &sprite, &text);
