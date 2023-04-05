@@ -110,7 +110,7 @@ int Display::event()
     }
     return -1;
 }
-
+ 
 void Display::changeColor(std::string key, int x, int y, std::string color)
 {
     if (color == "red")
