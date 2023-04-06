@@ -21,11 +21,11 @@ void pacman::init(std::vector <image> *sprite, std::vector <text> *textt)
         }
         file.close(); // Fermeture du fichier
     }
-    (*sprite).push_back(image("pacman", "", pos_pacman_x, pos_pacman_y, 'C', "yellow"));
-    (*sprite).push_back(image("ghost1", "", 25, 9, 'A', "red"));
-    (*sprite).push_back(image("ghost2", "", 25, 11, 'A', "yellow"));
-    (*sprite).push_back(image("ghost3", "", 27, 9, 'A', "blue"));
-    (*sprite).push_back(image("ghost4", "", 27, 11, 'A', "pink"));
+    (*sprite).push_back(image("pacman", "", pos_pacman_x, pos_pacman_y, 'C', "yellow", 0));
+    (*sprite).push_back(image("ghost1", "", 25, 9, 'A', "red", 0));
+    (*sprite).push_back(image("ghost2", "", 25, 11, 'A', "yellow", 0));
+    (*sprite).push_back(image("ghost3", "", 27, 9, 'A', "blue", 0));
+    (*sprite).push_back(image("ghost4", "", 27, 11, 'A', "pink", 0));
 }
 
 std::string pacman::input(int input, std::vector <image> *sprite, std::vector <text> *textt, int *i)

@@ -1,4 +1,7 @@
 .vscode
 .DS_Store
-Makefile
 arcarde.dSYM
+lib/*.so
+*.dSYM
+arcade
+Makefile
