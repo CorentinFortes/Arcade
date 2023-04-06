@@ -19,6 +19,6 @@ class IGame
         virtual void init(std::vector <image> *sprite, std::vector <text> *text) = 0;
         virtual std::string finish() = 0;
         virtual bool quit() = 0;
-        virtual std::string input(int input, std::vector <image> *sprite, std::vector <text> *text) = 0;
+        virtual std::string input(int input, std::vector <image> *sprite, std::vector <text> *text, int *i) = 0;
         virtual void play(std::vector <image> *sprite, std::vector <text> *text) = 0;
 };

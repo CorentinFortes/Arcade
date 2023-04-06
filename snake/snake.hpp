@@ -12,16 +12,6 @@
 #include "../IGame.hpp"
 #include "../core.hpp"
 
-class Queue
-{
-    public:
-        int num;
-        int x;
-        int y;
-        Queue(int num, int x, int y);
-        ~Queue() {};
-};
-
 class snake : public IGame
 {
     private:
@@ -33,13 +23,12 @@ class snake : public IGame
         std::string retour;
         bool isQuit;
         int score;
-        std::vector <Queue> queue;
 
     public:
         snake() : isQuit(false), pos_snake_x(25), pos_snake_y(8), pos_food_x(15), pos_food_y(5), direction('d'), score(3) {};
         ~snake();
         void init(std::vector <image> *sprite, std::vector <text> *text);
-        std::string input(int input, std::vector <image> *sprite, std::vector <text> *text);
+        std::string input(int input, std::vector <image> *sprite, std::vector <text> *text, int *i);
         void play(std::vector <image> *sprite, std::vector <text> *text);
         std::string finish();
         bool quit();

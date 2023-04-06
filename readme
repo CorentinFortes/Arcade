@@ -1,0 +1,5 @@
+if u want to add a game, u have to create a lib.so file whith a class that henerit from IGame and implement all the function of the interface.
+then u have to add it to the makefile in the game section and add extern c islib fonction and a create fonction who create a new class
+
+if u want to add a lib, u have to create a lib.so file whith a class that henerit from IDisplay and implement all the function of the interface.
+then u have to add it to the makefile in the lib section and add extern c islib fonction and a create fonction who create a new class

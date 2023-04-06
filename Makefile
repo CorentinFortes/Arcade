@@ -35,8 +35,9 @@ core :
 	g++ openLib.cpp all.cpp core.cpp -o $(NAME) -ldl $(INCLUDE_PATH) -g3
 
 games :
-	g++ -shared -fPIC ./menu/menu.cpp all.cpp -o ./lib/arcade_menu.so $(INCLUDE_PATH)
-	g++ -shared -fPIC ./snake/snake.cpp all.cpp -o ./lib/arcade_snake.so $(INCLUDE_PATH)
+	g++ -shared -fPIC ./menu/menu.cpp all.cpp -o ./lib/arcade_menu.so -std=c++17 -g 
+	g++ -shared -fPIC ./snake/snake.cpp all.cpp -o ./lib/arcade_snake.so -std=c++17 -g
+	g++ -shared -fPIC ./pacman/pacman.cpp all.cpp -o ./lib/arcade_pacman.so -std=c++17 -g
 
 graphicals :
 	g++ -shared -fPIC ./NCURSES/ncurse.cpp all.cpp -o ./lib/arcade_ncurses.so -lncurses $(INCLUDE_PATH)

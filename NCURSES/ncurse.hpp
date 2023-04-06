@@ -10,8 +10,8 @@
 class Display : public IDisplay
 {
     private:
-    void printMenu(std::vector <std::string> menu, std::vector <std::string> games);
-    std::string printUser();
+    // void printMenu(std::vector <std::string> menu, std::vector <std::string> games);
+    // std::string printUser();
     WINDOW *window;
     std::map <std::string, std::string> texts;
     std::map <std::string, char> images;

@@ -6,22 +6,55 @@
 */
 
 #include "core.hpp"
-
-typedef IDisplay* (*creator) ();
-typedef IGame* (*jeu_menu) ();
+#include <dirent.h>
 
 void Core::openLibs(std::string libr, std::string gamee, std::string user)
 {
     void *handle = openlib(libr.c_str());
     if (!handle)
         return;
-    creator create = (creator) dlsym(handle, "create");
+    create = (creator) dlsym(handle, "create");
     display = create();
     void *game_ = openlib(gamee.c_str());
     if (!game_)
         return;
     jeu_menu jeu = (jeu_menu) dlsym(game_, "create");
     game = jeu();
+}
+
+std::string Core::changelib(std::string *lib)
+{
+    DIR* dir = opendir("./lib");
+    std::vector <std::string> libs;
+    struct dirent* doss;
+    while ((doss = readdir(dir)) != nullptr) {
+        if (doss->d_type == DT_REG) {
+            std::string filename(doss->d_name);
+            if (filename.length() >= 3 && filename.substr(filename.length() - 3) == ".so") {
+                void *handle = openlib("lib/" + filename);
+                if (!handle)
+                    return "";
+                typelib libt = (typelib) dlsym(handle, "islib");
+                if (libt()) {
+                    libs.push_back("lib/" + filename);
+                }
+                dlclose(handle);
+            }
+        }
+    }
+    closedir(dir);
+    for (int i = 0; i < libs.size(); i++) {
+        if (libs[i] == *lib) {
+            if (i + 1 == libs.size()) {
+                (*lib) = libs[0];
+                return (libs[0]);
+            } else {
+                (*lib) = libs[i + 1];
+                return (libs[i + 1]);
+            }
+        }
+    }
+    return "";
 }
 
 Core::Core(std::string lib, std::string gamee, std::string user)
@@ -34,11 +67,24 @@ Core::Core(std::string lib, std::string gamee, std::string user)
     game->init(&sprite, &text);
     display->createTexts(text);
     display->createSprites(sprite);
+    int swap;
     while (game->quit() == false) {
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
         display->drawTexts(text);
         display->drawSprites(sprite);
-        retour = game->input(display->event(), &sprite, &text);
+        retour = game->input(display->event(), &sprite, &text, &swap);
+        if (swap == 1) {
+            void *handle = openlib(changelib(&lib).c_str());
+            if (!handle)
+                return;
+            create = (creator) dlsym(handle, "create");
+            display->closeWindow();
+            display = create();
+            display->openWindow();
+            display->createTexts(text);
+            display->createSprites(sprite);
+            swap = 0;
+        }
         game->play(&sprite, &text);
         display->displayWindow(); 
     }

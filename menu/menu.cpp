@@ -72,22 +72,27 @@ void menu::init(std::vector <image> *sprite, std::vector <text> *texts)
     // menu->createText("User : ", "User : ", 0, max_tot + 2);
 }
 
-std::string menu::input(int ch, std::vector <image> *sprite, std::vector <text> *textt)
+std::string menu::input(int ch, std::vector <image> *sprite, std::vector <text> *textt, int *i)
 {
     if (isSelected == false) {
         if (ch == 9) {
-            // menu->changeLib();
+            *i = 1;
         }
         if (ch == 2) {
             if (surligne < max_lib + 2) {
                 if (selectlib != -1)
-                    textt->at(findText(libs[selectlib - 1], textt)).color = "white";
+                    for (int i = 0; i < libs.size() ; i++) {
+                        textt->at(i).color = "white";
+                    }
                     // menu->changeColor(libs[selectlib - 1], 0, selectlib, "white");
                 selectlib = surligne;
             }
             if (surligne > max_lib + 2) {
                 if (selectgame != -1)
-                    textt->at(findText(games[selectgame - max_lib - 3], textt)).color = "white";
+                    for (int i = 0; i < games.size() ; i++) {
+                        textt->at(i).color = "white";
+                    }
+                    // textt->at(findText(games[selectgame - max_lib - 3], textt)).color = "white";
                     // menu->changeColor(games[selectgame - max_lib - 3], 0, selectgame, "white");
                 selectgame = surligne;
             }
