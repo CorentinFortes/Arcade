@@ -102,6 +102,8 @@ int Display::event()
                         return 2;
                     case SDLK_BACKSPACE:
                         return 8;
+                    case SDLK_TAB:
+                        return 9;
                     case SDLK_a:
                         return 97;
                     case SDLK_b:

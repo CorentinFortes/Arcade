@@ -45,7 +45,7 @@ std::string Core::changelib(std::string *lib)
     closedir(dir);
     for (int i = 0; i < libs.size(); i++) {
         if (libs[i] == *lib) {
-            if (i + 1 == libs.size()) {
+            if (i + 1 >= libs.size()) {
                 (*lib) = libs[0];
                 return (libs[0]);
             } else {
