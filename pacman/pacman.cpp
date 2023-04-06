@@ -11,21 +11,24 @@ void pacman::init(std::vector <image> *sprite, std::vector <text> *textt)
 {
     std::string filename = "pacman/pacman.txt";
     int i = 0;
-    std::ifstream file(filename); // Ouverture du fichier en mode lecture
+    std::ifstream file(filename);
     std::string buff;
     if (file.is_open()) {
-        while (getline(file, buff)) { // Lecture de chaque ligne du fichier
-            std::string name = "map_" + std::to_string(i);
-            (*textt).push_back(text(name, buff, 0, i,"blue"));
+        while (getline(file, buff)) {
+            for (int n = 0; n < buff.size(); n++) {
+                (*sprite).push_back(image("map_" + std::to_string(i) + std::to_string(n), "", n, i, buff.at(n), "blue", 0));
+            }
+            // std::string name = "map_" + std::to_string(i);
+            // (*textt).push_back(text(name, buff, 0, i,"blue"));
             i++;
         }
-        file.close(); // Fermeture du fichier
+        file.close();
     }
     (*sprite).push_back(image("pacman", "", pos_pacman_x, pos_pacman_y, 'C', "yellow", 0));
     (*sprite).push_back(image("ghost1", "", 25, 9, 'A', "red", 0));
     (*sprite).push_back(image("ghost2", "", 25, 11, 'A', "yellow", 0));
     (*sprite).push_back(image("ghost3", "", 27, 9, 'A', "blue", 0));
-    (*sprite).push_back(image("ghost4", "", 27, 11, 'A', "pink", 0));
+    (*sprite).push_back(image("ghost4", "", 27, 11, 'A', "pink", 0)); 
 }
 
 std::string pacman::input(int input, std::vector <image> *sprite, std::vector <text> *textt, int *i)

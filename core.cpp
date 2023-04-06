@@ -24,7 +24,7 @@ void Core::openLibs(std::string libr, std::string gamee, std::string user)
 
 std::string Core::changelib(std::string *lib)
 {
-    DIR* dir = opendir("./lib");
+    DIR* dir = opendir("lib");
     std::vector <std::string> libs;
     struct dirent* doss;
     while ((doss = readdir(dir)) != nullptr) {
@@ -67,7 +67,7 @@ Core::Core(std::string lib, std::string gamee, std::string user)
     game->init(&sprite, &text);
     display->createTexts(text);
     display->createSprites(sprite);
-    int swap;
+    int swap = 0;
     while (game->quit() == false) {
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
         display->drawTexts(text);

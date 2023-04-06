@@ -22,20 +22,20 @@ void *openlib(std::string path)
 void menu::init(std::vector <image> *sprite, std::vector <text> *texts)
 {
     isQuit = false;
-    DIR* dir = opendir("./lib");
+    DIR* dir = opendir("lib");
     struct dirent* doss;
     while ((doss = readdir(dir)) != nullptr) {
         if (doss->d_type == DT_REG) {
             std::string filename(doss->d_name);
             if (filename.length() >= 3 && filename.substr(filename.length() - 3) == ".so") {
-                void *handle = openlib("./lib/" + filename);
+                void *handle = openlib("lib/" + filename);
                 if (!handle)
                     return;
                 typelib libt = (typelib) dlsym(handle, "islib");
                 if (libt()) {
-                    libs.push_back("./lib/" + filename);
+                    libs.push_back("lib/" + filename);
                 } else {
-                    games.push_back("./lib/" + filename);
+                    games.push_back("lib/" + filename);
                 }
                 dlclose(handle);
             }

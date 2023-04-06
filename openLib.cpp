@@ -27,7 +27,7 @@ void *openlib(std::string path)
 
 int main (int ac, char **av)
 {
-    Core core(av[1], "./lib/arcade_menu.so", " ");
+    Core core(av[1], "lib/arcade_menu.so", " ");
     return 0;
 }
 
