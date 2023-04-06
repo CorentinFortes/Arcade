@@ -31,10 +31,11 @@ public:
     std::string path;
     int x;
     int y;
+    int rotate;
     char chara;
     std::string color;
-    image (std::string name, std::string path, int x, int y, char chara, std::string color) 
-    : name(name), path(path), x(x), y(y), chara(chara), color(color) {};
+    image (std::string name, std::string path, int x, int y, char chara, std::string color, int rotate) 
+    : name(name), path(path), x(x), y(y), chara(chara), color(color) , rotate(rotate) {};
     ~image () {};
 };
 

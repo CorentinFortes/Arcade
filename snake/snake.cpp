@@ -37,17 +37,27 @@ snake::~snake()
 
 void snake::init(std::vector <image> *sprite, std::vector <text> *textt)
 {
-    (*textt).push_back(text("map0", "/----------------------------------------------------------\\", 0, 0,"white"));
+    for (int i = 0; i < 60; i++) {
+        if (i == 0) {
+            (*sprite).push_back(image("map0", "SFML/board.png", i, 0, '/', "white", 0));
+            (*sprite).push_back(image("map3", "SFML/board.png", i, 16, '\\', "white", 0));
+        } else if (i == 59) {
+            (*sprite).push_back(image("map0", "SFML/board.png", i, 0, '\\', "white", 0));
+            (*sprite).push_back(image("map3", "SFML/board.png", i, 16, '/', "white", 0));
+        } else {
+            (*sprite).push_back(image("map0", "SFML/board.png", i, 0, '-', "white", 0));
+            (*sprite).push_back(image("map3", "SFML/board.png", i, 16, '-', "white", 0));
+        }
+   }
     for (int i = 0; i < 15; i++) {
-        (*textt).push_back(text("map1", "|", 0, i + 1,"white"));
-        (*textt).push_back(text("map2", "|", 59, i + 1,"white"));
+        (*sprite).push_back(image("map1", "SFML/board.png", 0, i + 1, '|', "white", 0));
+        (*sprite).push_back(image("map2", "SFML/board.png", 59, i + 1, '|', "white", 0));
     }
-    (*textt).push_back(text("map0", "\\----------------------------------------------------------/", 0, 16,"white"));
-    (*sprite).push_back(image("snake_0", "", 25, 8, '>', "green"));
-    (*sprite).push_back(image("food", "", 15, 5, 'O', "red"));
-    (*sprite).push_back(image("snake_1", "", 25, 8, '*', "green"));
-    (*sprite).push_back(image("snake_2", "", 25, 8, '*', "green"));
-    (*sprite).push_back(image("snake_3", "", 25, 8, '*', "green"));
+    (*sprite).push_back(image("snake_0", "SFML/snakehead.png", 25, 8, '>', "green", 270));
+    (*sprite).push_back(image("food", "SFML/pngegg.png", 15, 5, 'O', "red", 0));
+    (*sprite).push_back(image("snake_1", "SFML/snakecorps.png", 25, 8, '*', "green", 270));
+    (*sprite).push_back(image("snake_2", "SFML/snakecorps.png", 25, 8, '*', "green", 270));
+    (*sprite).push_back(image("snake_3", "SFML/snakecorps.png", 25, 8, '*', "green", 270));
 }
 
 std::string snake::input(int ch, std::vector <image> *sprite, std::vector <text> *textt)
@@ -57,15 +67,35 @@ std::string snake::input(int ch, std::vector <image> *sprite, std::vector <text>
         return "";
     }
     if (ch == 259 && direction != 'h') {
+        for (auto &i : (*sprite)) {
+            if (i.name != "food") {
+                i.rotate = 180;
+            }
+        }
         direction = 'b';
     }
     if (ch == 258 && direction != 'b') {
+        for (auto &i : (*sprite)) {
+            if (i.name != "food") {
+                i.rotate = 0;
+            }
+        }
         direction = 'h';
     }
     if (ch == 260 && direction != 'd') {
+        for (auto &i : (*sprite)) {
+            if (i.name != "food") {
+                i.rotate = 90;
+            }
+        }
         direction = 'g';
     }
     if (ch == 261 && direction != 'g') {
+        for (auto &i : (*sprite)) {
+            if (i.name != "food") {
+                i.rotate = 270;
+            }
+        }
         direction = 'd';
     }
     return ("");
@@ -89,7 +119,7 @@ void snake::play(std::vector <image> *sprite, std::vector <text> *text)
         sprite->at(findImage("snake_0", sprite)).chara = '<';
         pos_snake_x -= 1;
     }
-    if (pos_snake_x > 58 || pos_snake_x < 1 || pos_snake_y > 15 || pos_snake_y < 1) {
+    if (pos_snake_x > 59 || pos_snake_x < 1 || pos_snake_y > 15 || pos_snake_y < 1) {
         isQuit = true;
         return;
     }
@@ -122,11 +152,11 @@ void snake::play(std::vector <image> *sprite, std::vector <text> *text)
         }
     }
     if (pos_snake_x == pos_food_x && pos_snake_y == pos_food_y) {
-        pos_food_x = rand() % 58 + 1;
+        pos_food_x = rand() % 54 + 2;
         pos_food_y = rand() % 15 + 1;
         score += 1;
         std::string name = "snake_" + std::to_string(score);
-        (*sprite).push_back(image(name, "", pos_snake_x, pos_snake_y, '*', "green"));
+        (*sprite).push_back(image(name, "SFML/snakecorps.png", pos_snake_x, pos_snake_y, '*', "green", 270));
     }
 }
 

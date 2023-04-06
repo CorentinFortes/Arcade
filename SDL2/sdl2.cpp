@@ -10,7 +10,7 @@
 void Display::openWindow()
 { 
     SDL_Init(SDL_INIT_VIDEO);
-    window = SDL_CreateWindow("SDL2 Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 700, SDL_WINDOW_SHOWN);
+    window = SDL_CreateWindow("SDL2 Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1800, 700, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
     TTF_Init();
     color[0] = {255, 255, 255, 255};
@@ -94,6 +94,10 @@ int Display::event()
                         return 259;
                     case SDLK_DOWN:
                         return 258;
+                    case SDLK_LEFT:
+                        return 260;
+                    case SDLK_RIGHT:
+                        return 261;
                     case SDLK_RETURN:
                         return 2;
                     case SDLK_BACKSPACE:
@@ -194,6 +198,42 @@ void Display::modifieText(std::string key, int x, int y, std::string str)
     SDL_DestroyTexture(_text[key]);
     _text[key] = SDL_CreateTextureFromSurface(renderer, _surface[key]);
     SDL_RenderClear(renderer);
+}
+
+void Display::createImage(std::string name, std::string path, int x, int y, char chara, int rotate)
+{
+    _surfaceSprite[name] = IMG_Load(path.c_str());
+    _texture[name] = SDL_CreateTextureFromSurface(renderer, _surfaceSprite[name]);
+}
+
+void Display::createSprites(std::vector <image> sprite)
+{
+    for (int i = 0; i < sprite.size(); i++) {
+        createImage(sprite[i].name, sprite[i].path, sprite[i].x, sprite[i].y, sprite[i].chara, sprite[i].rotate);
+    }
+}
+
+void Display::drawImage(std::string name, int x, int y, std::string color, char chara, int rotate)
+{
+    SDL_Rect rect;
+    rect.x = x * 20;
+    rect.y = y * 30;
+    rect.w = 32;
+    rect.h = 32;
+    angle = rotate;
+    SDL_Point rotationPoint = { rect.w / 2, rect.h / 2 };
+    SDL_RenderCopyEx(renderer, _texture[name], NULL, &rect, angle, &rotationPoint, SDL_FLIP_NONE);
+    // SDL_RenderCopy(renderer, _texture[name], NULL, &rect);
+}
+
+void Display::drawSprites(std::vector <image> sprite)
+{
+    if (_surfaceSprite.size() < sprite.size()) {
+        createImage(sprite[sprite.size() - 1].name, sprite[sprite.size() - 1].path, sprite[sprite.size() - 1].x, sprite[sprite.size() - 1].y, sprite[sprite.size() - 1].chara, sprite[sprite.size() - 1].rotate);
+    }
+    for (int i = 0; i < sprite.size(); i++) {
+        drawImage(sprite[i].name, sprite[i].x, sprite[i].y, sprite[i].color , sprite[i].chara, sprite[i].rotate);
+    }
 }
 
 extern "C" IDisplay* create(void)

@@ -82,12 +82,12 @@ void Display::displayWindow()
     clear();
 }
 
-void Display::createImage(std::string name, std::string path, int x, int y, char chara)
+void Display::createImage(std::string name, std::string path, int x, int y, char chara, int rotate)
 {
     images.insert(std::map<std::string, char>::value_type(name, chara));
 }
 
-void Display::drawImage(std::string key, int x, int y, std::string color, char c)
+void Display::drawImage(std::string key, int x, int y, std::string color, char c, int rotate)
 {
     init_pair(1, COLOR_BLACK, COLOR_RED);
     init_pair(2, COLOR_BLACK, COLOR_GREEN);
@@ -123,7 +123,7 @@ void Display::createTexts(std::vector <text> text)
 void Display::createSprites(std::vector <image> image)
 {
     for (int i = 0; i < image.size(); i++) {
-        createImage(image[i].name, image[i].path, image[i].x, image[i].y, image[i].chara);
+        createImage(image[i].name, image[i].path, image[i].x, image[i].y, image[i].chara, image[i].rotate);
     }
 }
 
@@ -136,7 +136,7 @@ void Display::drawSprites(std::vector <image> image)
     for (int i = 0; i < image.size(); i++) {
         // if (images[image[i].name] != image[i].chara)
         //     images[image[i].name] = image[i].chara;
-        drawImage(image[i].name, image[i].x, image[i].y, image[i].color, image[i].chara);
+        drawImage(image[i].name, image[i].x, image[i].y, image[i].color, image[i].chara, image[i].rotate);
     }
 }
 

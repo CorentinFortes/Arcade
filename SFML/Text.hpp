@@ -50,6 +50,27 @@ class Text
     sf::Text txt;
 };
 
+class Sprites
+{
+    public:
+    Sprites() {};
+    Sprites(Sprites const& other) {
+        sprite.setTexture(other.texture);
+        sprite.setPosition(other.sprite.getPosition());
+    }
+    Sprites(std::string path, int x, int y) {
+        texture.loadFromFile(path);
+        sprite.setTexture(texture);
+        sf::Vector2f position(x, y);
+        sprite.setPosition(position);
+    };
+    ~Sprites() {};
+
+    public:
+    sf::Sprite sprite;
+    sf::Texture texture;
+};
+
 class SpriteCreator {
 
     public:

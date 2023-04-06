@@ -9,7 +9,7 @@
 
 void Display::openWindow()
 {
-    window.create(sf::VideoMode(900, 800), "SFML menu");
+    window.create(sf::VideoMode(1800, 800), "SFML menu");
 }
 
 void Display::closeWindow()
@@ -25,8 +25,8 @@ void Display::displayWindow()
 
 void Display::createText(std::string name, std::string str, int x, int y)
 {
-    x = x + 10;
-    y = y * 35;
+    if (y != 0)
+        y = y * 35;
     textSfml[name] = Text(str,x,y);
 }
 
@@ -37,19 +37,18 @@ void Display::createTexts(std::vector <text> text)
     }
 }
 
-void Display::createImage(std::string name, std::string path, int x, int y, char chara)
+void Display::createImage(std::string name, std::string path, int x, int y, char chara, int rotate)
 {
-    spriteSfml[name] = sf::Sprite();
-    sf::Texture texture;
-    texture.loadFromFile(path);
-    spriteSfml[name].setTexture(texture);
-    spriteSfml[name].setPosition(x, y);
+    spriteSfml[name] = Sprites(path, x, y);
+    sf::FloatRect bounds = spriteSfml[name].sprite.getLocalBounds();
+    spriteSfml[name].sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
+    spriteSfml[name].sprite.setScale(1.25, 1.25);
 }
 
 void Display::createSprites(std::vector <image> sprite)
 {
     for (int i = 0; i < sprite.size(); i++) {
-        createImage(sprite.at(i).name, sprite.at(i).path, sprite.at(i).x, sprite.at(i).y, sprite.at(i).chara);
+        createImage(sprite.at(i).name, sprite.at(i).path, sprite.at(i).x, sprite.at(i).y, sprite.at(i).chara, sprite.at(i).rotate);
     }
 }
 
@@ -80,8 +79,14 @@ void Display::drawTexts(std::vector <text> text)
 
 void Display::drawSprites(std::vector <image> sprite)
 {
-    for (auto &i : spriteSfml) {
-        window.draw(i.second);
+    if (spriteSfml.size() < sprite.size()) {
+        createSprites(sprite);
+    }
+    for (int i = 0; i < sprite.size(); i++) {
+        spriteSfml[sprite.at(i).name].sprite.setRotation(sprite.at(i).rotate);
+        spriteSfml[sprite.at(i).name].sprite.setPosition(sprite.at(i).x * 30, sprite.at(i).y * 40);
+        spriteSfml[sprite.at(i).name].sprite.setTexture(spriteSfml[sprite.at(i).name].texture);
+        window.draw(spriteSfml[sprite.at(i).name].sprite);
     }
 }
 
@@ -94,16 +99,19 @@ int Display::event()
         } if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
             return 1;
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
-            // std::cout << "enter" << std::endl;
             return 2;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-            // std::cout << "up" << std::endl;
             return 259;
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
-            // std::cout << "down" << std::endl;
             return 258;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            return 260;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            return 261;
         }
         if (event.type == sf::Event::TextEntered)
             return event.text.unicode;
@@ -129,7 +137,6 @@ void Display::changeColor(std::string key, int x, int y, std::string color)
 
 void Display::modifieText(std::string key, int x, int y, std::string newStr)
 {
-    // window.clear();
     textSfml[key].txt.setPosition(x + 10, y * 35);
     if (key == "user")
         textSfml[key].txt.setPosition(x + 100, y * 35);

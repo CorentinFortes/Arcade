@@ -29,8 +29,8 @@ class Display : public IDisplay
     void modifieText(std::string key, int x, int y, std::string newStr);
     void displayWindow();
     void closeWindow();
-    void createImage(std::string name, std::string path, int x, int y, char chara);
-    void drawImage(std::string key, int x, int y, std::string color, char c) {};
+    void createImage(std::string name, std::string path, int x, int y, char chara, int rotate);
+    void drawImage(std::string key, int x, int y, std::string color, char c, int rotate) {};
     void createTexts(std::vector <text> text);
     void createSprites(std::vector <image> sprite);
     void drawSprites(std::vector <image> sprite);
@@ -39,6 +39,7 @@ class Display : public IDisplay
     private:
     sf::RenderWindow window;
     std::map<std::string, Text> textSfml;
-    std::map<std::string, sf::Sprite> spriteSfml;
+    std::map<std::string, Sprites> spriteSfml;
     void setNeWColor(std::string color, Text &text);
+    int setRota();
 };
