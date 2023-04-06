@@ -24,8 +24,8 @@ private:
     char direction;
 
 public:
-    pacman(/* args */);
-    ~pacman();
+    pacman();
+    ~pacman() {};
     void init(std::vector <image> *sprite, std::vector <text> *text);
     std::string input(int input, std::vector <image> *sprite, std::vector <text> *text, int *i);
     void play(std::vector <image> *sprite, std::vector <text> *text);
