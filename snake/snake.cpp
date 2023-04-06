@@ -24,19 +24,13 @@
 //     }
 // }
 
-Queue::Queue(int num, int x, int y)
-{
-    this->num = num;
-    this->x = x;
-    this->y = y;
-}
-
 snake::~snake()
 {
 }
 
 void snake::init(std::vector <image> *sprite, std::vector <text> *textt)
 {
+    int i = 0;
     (*textt).push_back(text("map0", "/----------------------------------------------------------\\", 0, 0,"white"));
     for (int i = 0; i < 15; i++) {
         (*textt).push_back(text("map1", "|", 0, i + 1,"white"));
@@ -50,11 +44,14 @@ void snake::init(std::vector <image> *sprite, std::vector <text> *textt)
     (*sprite).push_back(image("snake_3", "", 25, 8, '*', "green"));
 }
 
-std::string snake::input(int ch, std::vector <image> *sprite, std::vector <text> *textt)
+std::string snake::input(int ch, std::vector <image> *sprite, std::vector <text> *textt, int *i)
 {
     if (ch == 1) {
         isQuit = true;
         return "";
+    }
+    if (ch == 9) {
+        *i = 1;
     }
     if (ch == 259 && direction != 'h') {
         direction = 'b';

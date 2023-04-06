@@ -39,10 +39,10 @@ int Display::event()
 
 void Display::changeColor(std::string str, int x, int y, std::string color)
 {
-    init_pair(1, COLOR_BLACK, COLOR_RED);
-    init_pair(2, COLOR_BLACK, COLOR_GREEN);
-    init_pair(3, COLOR_BLACK, COLOR_BLUE);
-    init_pair(4, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, COLOR_BLUE, COLOR_BLACK);
+    init_pair(4, COLOR_YELLOW, COLOR_BLACK);
     init_pair(5, COLOR_WHITE, COLOR_BLACK);
     if (color == "red")
         attron(COLOR_PAIR(1));
@@ -89,11 +89,12 @@ void Display::createImage(std::string name, std::string path, int x, int y, char
 
 void Display::drawImage(std::string key, int x, int y, std::string color, char c)
 {
-    init_pair(1, COLOR_BLACK, COLOR_RED);
-    init_pair(2, COLOR_BLACK, COLOR_GREEN);
-    init_pair(3, COLOR_BLACK, COLOR_BLUE);
-    init_pair(4, COLOR_BLACK, COLOR_YELLOW);
+    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(2, COLOR_GREEN, COLOR_BLACK);
+    init_pair(3, COLOR_BLUE, COLOR_BLACK);
+    init_pair(4, COLOR_YELLOW, COLOR_BLACK);
     init_pair(5, COLOR_WHITE, COLOR_BLACK);
+    init_pair(6, COLOR_MAGENTA, COLOR_BLACK);
     if (color == "red")
         attron(COLOR_PAIR(1));
     if (color == "green")
@@ -104,6 +105,8 @@ void Display::drawImage(std::string key, int x, int y, std::string color, char c
         attron(COLOR_PAIR(4));
     if (color == "white")
         attron(COLOR_PAIR(5));
+    if (color == "pink")
+        attron(COLOR_PAIR(6));
     char str[] = {c, '\0'};
     mvprintw(y, x, str);
     attroff(COLOR_PAIR(1));
@@ -111,6 +114,7 @@ void Display::drawImage(std::string key, int x, int y, std::string color, char c
     attroff(COLOR_PAIR(3));
     attroff(COLOR_PAIR(4));
     attroff(COLOR_PAIR(5));
+    attroff(COLOR_PAIR(6));
 }
 
 void Display::createTexts(std::vector <text> text)
