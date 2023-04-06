@@ -35,7 +35,7 @@ class Display : public IDisplay
     void createSprites(std::vector <image> sprite);
     void drawSprites(std::vector <image> sprite);
     void drawTexts(std::vector <text> text);
- 
+
     private:
     SDL_Window *window;
     SDL_Renderer *renderer;

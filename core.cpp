@@ -45,7 +45,7 @@ std::string Core::changelib(std::string *lib)
     closedir(dir);
     for (int i = 0; i < libs.size(); i++) {
         if (libs[i] == *lib) {
-            if (i + 1 == libs.size()) {
+            if (i + 1 >= libs.size()) {
                 (*lib) = libs[0];
                 return (libs[0]);
             } else {
@@ -67,7 +67,7 @@ Core::Core(std::string lib, std::string gamee, std::string user)
     game->init(&sprite, &text);
     display->createTexts(text);
     display->createSprites(sprite);
-    int swap;
+    int swap = 0;
     while (game->quit() == false) {
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
         display->drawTexts(text);
