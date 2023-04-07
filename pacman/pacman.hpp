@@ -10,8 +10,14 @@
 #include <iostream>
 #include <dlfcn.h>
 #include "../IGame.hpp"
+#include <cstdlib>
 #include "../core.hpp"
 #include <fstream>
+
+struct ghost {
+    int x, y;
+    char direction;
+};
 
 class pacman : public IGame
 {
@@ -23,6 +29,10 @@ private:
     int pos_pacman_x;
     int pos_pacman_y;
     char direction;
+    ghost ghost1;
+    ghost ghost2;
+    ghost ghost3;
+    ghost ghost4;
 
 public:
     pacman();
@@ -30,6 +40,7 @@ public:
     void init(std::vector <image> *sprite, std::vector <text> *text);
     std::string input(int input, std::vector <image> *sprite, std::vector <text> *text, int *i);
     void play(std::vector <image> *sprite, std::vector <text> *text);
+    ghost decideNextDestination(ghost x);
     std::string finish();
     bool quit();
 };
