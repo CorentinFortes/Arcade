@@ -13,6 +13,8 @@
 #include <cstdlib>
 #include "../core.hpp"
 #include <fstream>
+#include <stdlib.h>
+#include <time.h>
 
 struct ghost {
     int x, y;

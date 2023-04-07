@@ -104,25 +104,6 @@ void pacman::play(std::vector <image> *sprite, std::vector <text> *textt)
         isQuit = true;
         retour = "";
     }
-    // }
-    // if (map["map_" + std::to_string(ghost2.y)].at(ghost2.x) == ' ') {
-    //     sprite->at(findImage("ghost2", sprite)).x = ghost2.x;
-    //     sprite->at(findImage("ghost2", sprite)).y = ghost2.y;
-    // }
-    // if (map["map_" + std::to_string(ghost3.y)].at(ghost3.x) == ' ') {
-    //     sprite->at(findImage("ghost3", sprite)).x = ghost3.x;
-    //     sprite->at(findImage("ghost3", sprite)).y = ghost3.y;
-    // }
-    // if (map["map_" + std::to_string(ghost4.y)].at(ghost4.x) == ' ') {
-    //     sprite->at(findImage("ghost4", sprite)).x = ghost4.x;
-    //     sprite->at(findImage("ghost4", sprite)).y = ghost4.y;
-    // }
-    // // sprite->at(findImage("ghost2", sprite)).x = ghost2.x;
-    // sprite->at(findImage("ghost2", sprite)).y = ghost2.y;
-    // sprite->at(findImage("ghost3", sprite)).x = ghost3.x;
-    // sprite->at(findImage("ghost3", sprite)).y = ghost3.y;
-    // sprite->at(findImage("ghost4", sprite)).x = ghost4.x;
-    // sprite->at(findImage("ghost4", sprite)).y = ghost4.y;
 }
 
 ghost pacman::decideNextDestination(ghost g) {
@@ -149,21 +130,6 @@ ghost pacman::decideNextDestination(ghost g) {
             return g;
         }
     }
-    // int n = abs(g.x + 1 - pos_pacman_x) + abs(g.y - pos_pacman_y);       
-    // if (abs(g.x - 1 - pos_pacman_x) + abs(g.y - pos_pacman_y) < n)
-    //     i = 2;
-    // if (abs(g.x - pos_pacman_x) + abs(g.y + 1 - pos_pacman_y) < n)
-    //     i = 3;
-    // if (abs(g.x - pos_pacman_x) + abs(g.y - 1 - pos_pacman_y) < n)
-    //     i = 4;
-    // if (i == 1 && map["map_" + std::to_string(ghost2.y)].at(ghost2.x + 1) != '*')
-    //     g.x += 1;
-    // if (i == 2 && map["map_" + std::to_string(ghost2.y)].at(ghost2.x - 1) != '*')
-    //     g.x -= 1;
-    // if (i == 3 && map["map_" + std::to_string(ghost2.y + 1)].at(ghost2.x) != '*')
-    //     g.y += 1;
-    // if (i == 4 && map["map_" + std::to_string(ghost2.y - 1)].at(ghost2.x) != '*')
-    //     g.y -= 1;
     return g;
 }
 
