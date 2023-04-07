@@ -16,10 +16,10 @@ void pacman::init(std::vector <image> *sprite, std::vector <text> *textt)
     if (file.is_open()) {
         while (getline(file, buff)) {
             for (; n < buff.size(); n++) {
-                if (buff[n] == ' ')
-                    (*sprite).push_back(image("map_" + std::to_string(i) + std::to_string(n), "SFML/empty.png", n, i, buff[n], "white", 0));
-                else
+                if (buff[n] == '*' || buff[n] == '-') {
                     (*sprite).push_back(image("map_" + std::to_string(i) + std::to_string(n), "SFML/pacou.png", n, i, buff[n], "blue", 0));
+                } else
+                    (*sprite).push_back(image("map_" + std::to_string(i) + std::to_string(n), "SFML/empty.png", n, i, buff[n], "white", 0));
             }
             // std::string name = "map_" + std::to_string(i);
             // (*textt).push_back(text(name, buff, 0, i,"blue")); 
@@ -68,10 +68,10 @@ void pacman::play(std::vector <image> *sprite, std::vector <text> *textt)
         isQuit = true;
         retour = "";
     }
-    if (direction == 'h' && sprite->at(findImage("map_" + std::to_string(pos_pacman_y - 1) + std::to_string(pos_pacman_x), sprite)).chara == ' ') {
+    if (direction == 'h' && sprite->at(findImage("map_" + std::to_string(pos_pacman_y + 1) + std::to_string(pos_pacman_x), sprite)).chara == ' ') {
         pos_pacman_y += 1;
     }
-    if (direction == 'b' && sprite->at(findImage("map_" + std::to_string(pos_pacman_y + 1) + std::to_string(pos_pacman_x), sprite)).chara == ' ') {
+    if (direction == 'b' && sprite->at(findImage("map_" + std::to_string(pos_pacman_y - 1) + std::to_string(pos_pacman_x), sprite)).chara == ' ') {
         pos_pacman_y -= 1;
     }
     if (direction == 'g' && sprite->at(findImage("map_" + std::to_string(pos_pacman_y) + std::to_string(pos_pacman_x - 1), sprite)).chara == ' ') {

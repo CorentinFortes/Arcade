@@ -217,11 +217,13 @@ void Display::createSprites(std::vector <image> sprite)
 
 void Display::drawImage(std::string name, int x, int y, std::string color, char chara, int rotate)
 {
+    int spriteWidth, spriteHeight;
+    SDL_QueryTexture(_texture[name], NULL, NULL, &spriteWidth, &spriteHeight);
     SDL_Rect rect;
     rect.x = x * 20;
     rect.y = y * 30;
-    rect.w = 32;
-    rect.h = 32;
+    rect.w = spriteWidth;
+    rect.h = spriteHeight;
     angle = rotate;
     SDL_Point rotationPoint = { rect.w / 2, rect.h / 2 };
     SDL_RenderCopyEx(renderer, _texture[name], NULL, &rect, angle, &rotationPoint, SDL_FLIP_NONE);
