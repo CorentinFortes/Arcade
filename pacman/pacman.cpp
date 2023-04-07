@@ -36,6 +36,18 @@ void pacman::init(std::vector <image> *sprite, std::vector <text> *textt)
     (*sprite).push_back(image("ghost2", "SFML/orange.png", 25, 11, 'A', "yellow", 0));
     (*sprite).push_back(image("ghost3", "SFML/blue.png", 27, 9, 'A', "blue", 0));
     (*sprite).push_back(image("ghost4", "SFML/pink.png", 27, 11, 'A', "pink", 0));
+    ghost1.x = 25;
+    ghost1.y = 9;
+    ghost2.x = 25;
+    ghost2.y = 11;
+    ghost3.x = 27;
+    ghost3.y = 9;
+    ghost4.x = 27;
+    ghost4.y = 11;
+    ghost1.direction = 'h';
+    ghost2.direction = 'h';
+    ghost3.direction = 'h';
+    ghost4.direction = 'h';
 }
 
 std::string pacman::input(int input, std::vector <image> *sprite, std::vector <text> *textt, int *i)
@@ -88,6 +100,78 @@ void pacman::play(std::vector <image> *sprite, std::vector <text> *textt)
     }
     sprite->at(findImage("pacman", sprite)).x = pos_pacman_x;
     sprite->at(findImage("pacman", sprite)).y = pos_pacman_y;
+    ghost1 = decideNextDestination(ghost1);
+    // ghost2 = decideNextDestination(ghost2);
+    // ghost3 = decideNextDestination(ghost3);
+    // ghost4 = decideNextDestination(ghost4);
+    // if (map["map_" + std::to_string(ghost1.y)].at(ghost1.x) == ' ') {
+    sprite->at(findImage("ghost1", sprite)).x = ghost1.x;
+    sprite->at(findImage("ghost1", sprite)).y = ghost1.y;
+    if (ghost1.x == pos_pacman_x && ghost1.y == pos_pacman_y) {
+        isQuit = true;
+        retour = "";
+    }
+    // }
+    // if (map["map_" + std::to_string(ghost2.y)].at(ghost2.x) == ' ') {
+    //     sprite->at(findImage("ghost2", sprite)).x = ghost2.x;
+    //     sprite->at(findImage("ghost2", sprite)).y = ghost2.y;
+    // }
+    // if (map["map_" + std::to_string(ghost3.y)].at(ghost3.x) == ' ') {
+    //     sprite->at(findImage("ghost3", sprite)).x = ghost3.x;
+    //     sprite->at(findImage("ghost3", sprite)).y = ghost3.y;
+    // }
+    // if (map["map_" + std::to_string(ghost4.y)].at(ghost4.x) == ' ') {
+    //     sprite->at(findImage("ghost4", sprite)).x = ghost4.x;
+    //     sprite->at(findImage("ghost4", sprite)).y = ghost4.y;
+    // }
+    // // sprite->at(findImage("ghost2", sprite)).x = ghost2.x;
+    // sprite->at(findImage("ghost2", sprite)).y = ghost2.y;
+    // sprite->at(findImage("ghost3", sprite)).x = ghost3.x;
+    // sprite->at(findImage("ghost3", sprite)).y = ghost3.y;
+    // sprite->at(findImage("ghost4", sprite)).x = ghost4.x;
+    // sprite->at(findImage("ghost4", sprite)).y = ghost4.y;
+}
+
+ghost pacman::decideNextDestination(ghost g) {
+    int i = 1;
+    int best_x, best_y;
+    if (abs(g.x - pos_pacman_x) + abs(g.y - pos_pacman_y) < 15) {
+        if (abs(g.x + 1 - pos_pacman_x) < abs(g.x - 1 - pos_pacman_x))
+            best_x = 1;
+        else if (abs(g.x + 1 - pos_pacman_x) > abs(g.x - 1 - pos_pacman_x))
+            best_x = -1;
+        else
+            best_x = 0;
+        if (abs(g.y + 1 - pos_pacman_y) < abs(g.y - 1 - pos_pacman_y))
+            best_y = 1;
+        else if (abs(g.y + 1 - pos_pacman_y) > abs(g.y - 1 - pos_pacman_y))
+            best_y = -1;
+        else
+            best_y = 0;
+        if (map["map_" + std::to_string(g.y + best_y)].at(g.x) != '*' && best_y != 0) {
+            g.y += best_y;
+            return g;
+        } else if (map["map_" + std::to_string(g.y)].at(g.x + best_x) != '*' && best_x != 0) {
+            g.x += best_x;
+            return g;
+        }
+    }
+    // int n = abs(g.x + 1 - pos_pacman_x) + abs(g.y - pos_pacman_y);       
+    // if (abs(g.x - 1 - pos_pacman_x) + abs(g.y - pos_pacman_y) < n)
+    //     i = 2;
+    // if (abs(g.x - pos_pacman_x) + abs(g.y + 1 - pos_pacman_y) < n)
+    //     i = 3;
+    // if (abs(g.x - pos_pacman_x) + abs(g.y - 1 - pos_pacman_y) < n)
+    //     i = 4;
+    // if (i == 1 && map["map_" + std::to_string(ghost2.y)].at(ghost2.x + 1) != '*')
+    //     g.x += 1;
+    // if (i == 2 && map["map_" + std::to_string(ghost2.y)].at(ghost2.x - 1) != '*')
+    //     g.x -= 1;
+    // if (i == 3 && map["map_" + std::to_string(ghost2.y + 1)].at(ghost2.x) != '*')
+    //     g.y += 1;
+    // if (i == 4 && map["map_" + std::to_string(ghost2.y - 1)].at(ghost2.x) != '*')
+    //     g.y -= 1;
+    return g;
 }
 
 bool pacman::quit()
@@ -100,7 +184,7 @@ std::string pacman::finish()
     return retour;
 }
 
-pacman::pacman(/* args */) : isQuit(false), pos_pacman_x(25), pos_pacman_y(13), direction('d')
+pacman::pacman(/* args */) : isQuit(false), pos_pacman_x(35), pos_pacman_y(13), direction('d')
 {
 }
 
