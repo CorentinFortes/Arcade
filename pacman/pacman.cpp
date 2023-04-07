@@ -28,7 +28,7 @@ void pacman::init(std::vector <image> *sprite, std::vector <text> *textt)
         file.close();
     }
     pos_pacman_x = 25;
-    pos_pacman_y = 6;
+    pos_pacman_y = 7;
     (*sprite).push_back(image("pacman", "SFML/pacman.png", pos_pacman_x, pos_pacman_y, 'C', "yellow", 0));
     (*sprite).push_back(image("ghost1", "SFML/red.png", 25, 9, 'A', "red", 0));
     (*sprite).push_back(image("ghost2", "SFML/orange.png", 25, 11, 'A', "yellow", 0));
