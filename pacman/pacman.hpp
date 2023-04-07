@@ -19,13 +19,14 @@ private:
     /* data */
     std::string retour;
     bool isQuit = false;
+    std::map <std::string, std::string> map;
     int pos_pacman_x;
     int pos_pacman_y;
     char direction;
 
 public:
     pacman();
-    ~pacman() {};
+    ~pacman();
     void init(std::vector <image> *sprite, std::vector <text> *text);
     std::string input(int input, std::vector <image> *sprite, std::vector <text> *text, int *i);
     void play(std::vector <image> *sprite, std::vector <text> *text);
