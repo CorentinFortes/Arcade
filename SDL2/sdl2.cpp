@@ -85,7 +85,7 @@ int Display::event()
         {
             case SDL_QUIT:
                 return 1;
-            case SDL_KEYDOWN:
+            case SDL_KEYUP:
                 switch(e.key.keysym.sym)
                 {
                     case SDLK_ESCAPE:
