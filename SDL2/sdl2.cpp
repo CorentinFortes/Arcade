@@ -85,7 +85,7 @@ int Display::event()
         {
             case SDL_QUIT:
                 return 1;
-            case SDL_KEYDOWN:
+            case SDL_KEYUP:
                 switch(e.key.keysym.sym)
                 {
                     case SDLK_ESCAPE:
@@ -226,8 +226,11 @@ void Display::drawImage(std::string name, int x, int y, std::string color, char 
     rect.h = spriteHeight;
     angle = rotate;
     SDL_Point rotationPoint = { rect.w / 2, rect.h / 2 };
+    SDL_FreeSurface(_surfaceSprite[name]);
+    SDL_DestroyTexture(_texture[name]);
+    _surfaceSprite[name] = IMG_Load(color.c_str());
+    _texture[name] = SDL_CreateTextureFromSurface(renderer, _surfaceSprite[name]);
     SDL_RenderCopyEx(renderer, _texture[name], NULL, &rect, angle, &rotationPoint, SDL_FLIP_NONE);
-    // SDL_RenderCopy(renderer, _texture[name], NULL, &rect);
 }
 
 void Display::drawSprites(std::vector <image> sprite)
@@ -236,7 +239,7 @@ void Display::drawSprites(std::vector <image> sprite)
         createImage(sprite[sprite.size() - 1].name, sprite[sprite.size() - 1].path, sprite[sprite.size() - 1].x, sprite[sprite.size() - 1].y, sprite[sprite.size() - 1].chara, sprite[sprite.size() - 1].rotate);
     }
     for (int i = 0; i < sprite.size(); i++) {
-        drawImage(sprite[i].name, sprite[i].x, sprite[i].y, sprite[i].color , sprite[i].chara, sprite[i].rotate);
+        drawImage(sprite[i].name, sprite[i].x, sprite[i].y, sprite[i].path , sprite[i].chara, sprite[i].rotate);
     }
 }
 

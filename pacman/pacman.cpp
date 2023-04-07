@@ -18,10 +18,13 @@ void pacman::init(std::vector <image> *sprite, std::vector <text> *textt)
             std::string name = "map_" + std::to_string(i);
             // (*textt).push_back(text(name, buff, 0, i,"blue"));
             for (; n < buff.size(); n++) {
-                if (buff[n] == '*' || buff[n] == '-') {
+                if (buff[n] == '*' ) {
+                    // std::cout << "i: " << i << " n: " << n << std::endl;
                     (*sprite).push_back(image("map_" + std::to_string(i) + std::to_string(n), "SFML/pacou.png", n, i, buff[n], "blue", 0));
-                } else
+                } else if (buff[n] == ' ') {
                     (*sprite).push_back(image("map_" + std::to_string(i) + std::to_string(n), "SFML/empty.png", n, i, buff[n], "white", 0));
+                } else if (buff[n] == '-')
+                    (*sprite).push_back(image("map_" + std::to_string(i) + std::to_string(n), "SFML/pacou.png", n, i, buff[n], "white", 270));
             }
             map.insert(std::pair<std::string, std::string>(name, buff));
             i++, n=0;
@@ -80,15 +83,19 @@ void pacman::play(std::vector <image> *sprite, std::vector <text> *textt)
         retour = "";
     }
     if (direction == 'h' && map["map_" + std::to_string(pos_pacman_y + 1)].at(pos_pacman_x) == ' ') {
+        sprite->at(findImage("pacman", sprite)).rotate = 90;
         pos_pacman_y += 1;
     }
     if (direction == 'b' && map["map_" + std::to_string(pos_pacman_y - 1)].at(pos_pacman_x) == ' ') {
+        sprite->at(findImage("pacman", sprite)).rotate = 270;
         pos_pacman_y -= 1;
     }
     if (direction == 'g' && map["map_" + std::to_string(pos_pacman_y)].at(pos_pacman_x - 1) == ' ') {
+        sprite->at(findImage("pacman", sprite)).rotate = 180;
         pos_pacman_x -= 1;
     }
     if (direction == 'd' && map["map_" + std::to_string(pos_pacman_y)].at(pos_pacman_x + 1) == ' ') {
+        sprite->at(findImage("pacman", sprite)).rotate = 0;
         pos_pacman_x += 1;
     }
     sprite->at(findImage("pacman", sprite)).x = pos_pacman_x;

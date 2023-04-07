@@ -79,6 +79,7 @@ Core::Core(std::string lib, std::string gamee, std::string user)
                 return;
             create = (creator) dlsym(handle, "create");
             display->closeWindow();
+            free(display);
             display = create();
             display->openWindow();
             display->createTexts(text);
@@ -98,6 +99,8 @@ Core::Core(std::string lib, std::string gamee, std::string user)
         Core(lib, gamee, user);
     }
     display->closeWindow();
+    free(display);
+    free(game);
 }
 
 

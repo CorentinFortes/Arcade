@@ -12,6 +12,7 @@ void Display::openWindow()
     window = initscr();
     keypad(window, TRUE);
     noecho();
+    cbreak();
     start_color();
     nodelay(stdscr, TRUE);
     curs_set(0);

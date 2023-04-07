@@ -9,7 +9,7 @@
 
 void Display::openWindow()
 {
-    window.create(sf::VideoMode(1800, 800), "SFML menu");
+    window.create(sf::VideoMode(1900, 800), "SFML menu");
 }
 
 void Display::closeWindow()
@@ -85,7 +85,11 @@ void Display::drawSprites(std::vector <image> sprite)
     for (int i = 0; i < sprite.size(); i++) {
         spriteSfml[sprite.at(i).name].sprite.setRotation(sprite.at(i).rotate);
         spriteSfml[sprite.at(i).name].sprite.setPosition(sprite.at(i).x * 30, sprite.at(i).y * 40);
-        spriteSfml[sprite.at(i).name].sprite.setTexture(spriteSfml[sprite.at(i).name].texture);
+        sf::Texture texture;
+        texture.loadFromFile(sprite.at(i).path);
+        spriteSfml[sprite.at(i).name].sprite.setTexture(texture);
+        sf::FloatRect bounds = spriteSfml[sprite.at(i).name].sprite.getLocalBounds();
+        spriteSfml[sprite.at(i).name].sprite.setOrigin(bounds.width / 2.f, bounds.height / 2.f);
         window.draw(spriteSfml[sprite.at(i).name].sprite);
     }
 }
@@ -96,21 +100,21 @@ int Display::event()
     while (window.pollEvent(event)) {
         if (event.type == sf::Event::Closed) {
             return 1;
-        } if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+        } if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Escape)
             return 1;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Return) {
             return 2;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Up) {
             return 259;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down)) {
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Down) {
             return 258;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Left) {
             return 260;
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+        if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::Right) {
             return 261;
         }
         if (event.type == sf::Event::TextEntered)
