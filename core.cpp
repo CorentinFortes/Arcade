@@ -70,8 +70,6 @@ Core::Core(std::string lib, std::string gamee, std::string user)
     int swap = 0;
     while (game->quit() == false) {
         std::this_thread::sleep_for(std::chrono::milliseconds(150));
-        display->drawTexts(text);
-        display->drawSprites(sprite);
         retour = game->input(display->event(), &sprite, &text, &swap);
         if (swap == 1) {
             void *handle = openlib(changelib(&lib).c_str());
@@ -87,6 +85,8 @@ Core::Core(std::string lib, std::string gamee, std::string user)
             swap = 0;
         }
         game->play(&sprite, &text);
+        display->drawTexts(text);
+        display->drawSprites(sprite);
         display->displayWindow(); 
     }
     if (retour != "") {

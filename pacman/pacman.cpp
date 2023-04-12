@@ -116,8 +116,7 @@ void pacman::play(std::vector <image> *sprite, std::vector <text> *textt)
 ghost pacman::decideNextDestination(ghost g) {
     int i = 1;
     int best_x, best_y;
-    if (abs(g.x - pos_pacman_x) + abs(g.y - pos_pacman_y) < 15) {
-        if (abs(g.x + 1 - pos_pacman_x) < abs(g.x - 1 - pos_pacman_x))
+    if (abs(g.x + 1 - pos_pacman_x) < abs(g.x - 1 - pos_pacman_x))
             best_x = 1;
         else if (abs(g.x + 1 - pos_pacman_x) > abs(g.x - 1 - pos_pacman_x))
             best_x = -1;
@@ -136,7 +135,6 @@ ghost pacman::decideNextDestination(ghost g) {
             g.x += best_x;
             return g;
         }
-    }
     return g;
 }
 
